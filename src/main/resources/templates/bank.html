@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADA Bank - Bank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<div class="flex h-screen">
+    <!-- Sidebar -->
+    <div th:replace="fragments :: sidebar"></div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+        <!-- 🟢 Header -->
+        <div id="header">
+            <header class="bg-white shadow p-4 flex justify-between items-center">
+                <h1 class="text-xl font-semibold text-gray-800">Gestion des Banques</h1>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-500">🔔</button>
+                    <span class="font-medium">Admin</span>
+                    <img src="https://via.placeholder.com/32" class="rounded-full" alt="profil">
+                </div>
+            </header>
+        </div>
+
+        <!-- Content -->
+        <main class="p-6" id="page-content">
+            <div>
+                <!-- Titre et bouton d'ajout -->
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Gestion des Banques</h2>
+                    <button onclick="openModal('addBankModal')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
+                        + Ajouter une banque
+                    </button>
+                </div>
+
+                <!-- Barre de recherche -->
+                <div class="mb-4 flex space-x-2">
+                    <input type="text" placeholder="Rechercher une banque..." class="border p-2 w-full rounded">
+                    <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">🔍</button>
+                </div>
+
+                <!-- Tableau -->
+                <div class="bg-white shadow rounded-lg p-4">
+                    <h3 class="text-lg font-semibold mb-2">Liste des Banques</h3>
+                    <div th:if="${#lists.isEmpty(banks)}" class="h-20 text-pink-400">
+                        Aucune banque trouvée dans la base de données.
+                    </div>
+                    <table th:if="${!#lists.isEmpty(banks)}"  class="w-full border">
+                        <thead class="bg-green-100">
+                        <tr>
+                            <th class="p-2 border">Nom</th>
+                            <th class="p-2 border">Pays</th>
+                            <th class="p-2 border">ville</th>
+                            <th class="p-2 border">Email</th>
+                            <th class="p-2 border">Nombre de Clients</th>
+                            <th class="p-2 border">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="bank : ${banks}" class="hover:bg-gray-50">
+                            <td class="p-2 border" th:text="${bank.nom}"></td>
+                            <td class="p-2 border" th:text="${bank.pays}"></td>
+                            <td class="p-2 border" th:text="${bank.ville}">1200</td>
+                            <td class="p-2 border " th:text="${bank.email}">
+                            <td class="p-2 border text-center " th:text="${bank.numbreClient}">
+                            <td class="p-2 border flex space-x-2" >
+                            <!-- onclick="openModal('editBankModal')"-->
+                            <button type="button"
+                                    class="text-blue-600 hover:underline"
+                                    th:onclick="|openModal('editBankModal__${bank.id}')|">
+                                Modifier
+                            </button>
+
+                            <form th:action="@{|/dashboard/bank/deleteBank/${bank.id}|}" method="post" th:object="${bank}">
+                                <input type="hidden" name="id" th:value="${bank.id}" />
+                                <button type="submit" class="text-red-600 hover:underline bg-transparent border-0 p-0">
+                                    Supprimer
+                                </button>
+                            </form>
+                            </td>
+                        </tr>
+
+                        <tr th:each="bank : ${banks}">>
+                            <td colspan="6">
+                                <!-- Modal spécifique à chaque banque -->
+                                <div th:id="'editBankModal__' + ${bank.id}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                    <div class="bg-white p-6 rounded-lg w-96">
+                                        <h2 class="text-xl font-bold mb-4">Modifier Banque</h2>
+                                        <form th:action="@{|/dashboard/bank/updateBank/${bank.id}|}" method="post">
+                                            <input type="hidden" name="id" th:value="${bank.id}">
+                                            <input type="text" name="nom" th:value="${bank.nom}" class="w-full border p-2 rounded">
+                                            <input type="text" name="ville" th:value="${bank.ville}" class="w-full border p-2 rounded">
+                                            <input type="text" name="pays" th:value="${bank.pays}" class="w-full border p-2 rounded">
+                                            <input type="text" name="phone" th:value="${bank.phone}" class="w-full border p-2 rounded">
+                                            <input type="text" name="email" th:value="${bank.email}" class="w-full border p-2 rounded">
+                                            <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-500">Mettre à jour</button>
+                                        </form>
+                                        <button onclick="closeModal('editBankModal__[[${bank.id}]]')" class="mt-4 text-gray-600 hover:underline">Annuler</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <!-- ✅ Modal Ajouter Banque -->
+            <div id="addBankModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div class="bg-white p-6 rounded-lg w-96">
+                    <h2 class="text-xl font-bold mb-4">Ajouter une Banque</h2>
+                    <form class="space-y-4" th:action="@{/dashboard/bank/addBank}" th:object="${bank}"  method="post">
+                        <input type="text" placeholder="nom" th:field="*{nom}" class="w-full border p-2 rounded">
+                        <input type="text" placeholder="ville"  th:field="*{ville}" class="w-full border p-2 rounded">
+                        <input type="text" placeholder="pays"  th:field="*{pays}" class="w-full border p-2 rounded">
+                        <input type="text" placeholder="phone" th:field="*{phone}" class="w-full border p-2 rounded">
+                        <input type="text" placeholder="email"  th:field="*{email}" class="w-full border p-2 rounded">
+
+                        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-500">Enregistrer</button>
+                    </form>
+                    <button onclick="closeModal('addBankModal')" class="mt-4 text-gray-600 hover:underline">Annuler</button>
+                </div>
+            </div>
+
+            <!-- ✅ Modal Modifier Banque -->
+            <!--div id="editBankModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div class="bg-white p-6 rounded-lg w-96">
+                    <h2 class="text-xl font-bold mb-4">Modifier Banque</h2>
+
+                    <form class="space-y-4" th:action="@{/dashboard/bank/update}" th:object="bank" method="post">
+
+                        <input type="hidden" name="id" th:value="${bank.id}">
+
+                        <input type="text" name="nom" th:value="${bank.nom}" class="w-full border p-2 rounded">
+                        <input type="text" name="pays" th:value="${bank.pays}" placeholder="Pays" class="w-full border p-2 rounded">
+                        <input type="text" name="ville" th:value="${bank.ville}" placeholder="ville" class="w-full border p-2 rounded">
+                        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-500">Mettre à jour</button>
+                    </form>
+                    <button onclick="closeModal('editBankModal')" class="mt-4 text-gray-600 hover:underline">Annuler</button>
+                </div>
+            </div-->
+
+            <!-- ✅ JS pour ouvrir/fermer modals -->
+            <script>
+                function openModal(id) {
+                    document.getElementById(id).classList.remove("hidden");
+                }
+                function closeModal(id) {
+                    document.getElementById(id).classList.add("hidden");
+                }
+            </script>
+        </main>
+
+        <div th:replace="fragments :: footer"></div>
+    </div>
+</div>
+</body>
+</html>

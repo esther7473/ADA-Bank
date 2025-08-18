@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADA Bank - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<div class="flex h-screen">
+    <!-- Sidebar -->
+    <div th:replace="fragments :: sidebar"></div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+        <!-- Header -->
+        <div th:replace="fragments :: header"></div>
+
+        <!-- Content -->
+        <main class="p-6" id="page-content">
+            <div class="p-6 space-y-6">
+
+                <!-- Statistiques principales -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <p class="text-gray-500">Banques</p>
+                        <p class="text-2xl font-bold">5</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <p class="text-gray-500">Clients</p>
+                        <p class="text-2xl font-bold">2</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <p class="text-gray-500">Comptes</p>
+                        <p class="text-2xl font-bold">1</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <p class="text-gray-500">Volume</p>
+                        <p class="text-2xl font-bold">500 000,00 €</p>
+                    </div>
+                </div>
+
+                <!-- Top banques et raccourcis -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                    <!-- Top banques par clients -->
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h2 class="text-lg font-semibold mb-4">Top banques par clients</h2>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="p-2 border-b">Nom</th>
+                                    <th class="p-2 border-b">Pays</th>
+                                    <th class="p-2 border-b">Ville</th>
+                                    <th class="p-2 border-b">Date de Creation</th>
+                                    <th class="p-2 border-b">Nombre de clients</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-2 border-b">BACI Yopougon</td>
+                                    <td class="p-2 border-b">CI / Abidjan</td>
+                                    <td class="p-2 border-b">undefined</td>
+                                    <td class="p-2 border-b">0</td>
+                                    <td class="p-2 border-b">0</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-2 border-b">SIB cocody</td>
+                                    <td class="p-2 border-b">CI / Abidjan</td>
+                                    <td class="p-2 border-b">undefined</td>
+                                    <td class="p-2 border-b">0</td>
+                                    <td class="p-2 border-b">0</td>
+                                </tr>
+                                <!-- Ajouter d'autres lignes dynamiquement -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Raccourcis -->
+                    <div class="bg-white p-4 rounded-lg shadow flex flex-col space-y-4">
+                        <h2 class="text-lg font-semibold mb-2">Raccourcis</h2>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">Ajouter une banque</button>
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">Ajouter un client</button>
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">Ouvrir un compte</button>
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">Nouvelle transaction</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+        <div th:replace="fragments :: footer"></div>
+    </div>
+</div>
+</body>
+</html>

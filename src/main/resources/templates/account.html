@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADA Bank - Compte</title>
+    <script src="https://kit.fontawesome.com/6e50979847.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<div class="flex h-screen">
+    <!-- Sidebar -->
+    <div th:replace="fragments :: sidebar"></div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+        <!-- 🟢 Header -->
+        <div id="header">
+            <header class="bg-white shadow p-4 flex justify-between items-center">
+                <h1 class="text-xl font-semibold text-gray-800">Gestion des Comptes</h1>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-500">🔔</button>
+                    <span class="font-medium">Admin</span>
+                    <img src="https://via.placeholder.com/32" class="rounded-full" alt="profil">
+                </div>
+            </header>
+        </div>
+
+        <!-- Content -->
+        <main class="p-6" id="page-content">
+            <div>
+                <!-- Titre et bouton d'ajout -->
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Gestion des Comptes</h2>
+                    <button onclick="openModal('addAccountModal')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">
+                        + Ajouter un compte
+                    </button>
+                </div>
+
+                <!-- Barre de recherche -->
+                <div class="mb-4 flex space-x-2">
+                    <input type="text" placeholder="Rechercher un compte..." class="border p-2 w-full rounded">
+                    <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">🔍</button>
+                </div>
+
+                <!-- Tableau -->
+                <div class="bg-white shadow rounded-lg p-4">
+                    <h3 class="text-lg font-semibold mb-2">Liste des Comptes</h3>
+                    <div th:if="${#lists.isEmpty(accounts)}" class="h-20 text-pink-400">
+                        Aucun compte trouvé dans la base de données.
+                    </div>
+                    <table th:if="${!#lists.isEmpty(accounts)}" class="w-full border">
+                        <thead class="bg-green-100">
+                        <tr>
+                            <th class="p-2 border">Numéro</th>
+                            <th class="p-2 border">Solde</th>
+                            <th class="p-2 border">Type</th>
+                            <th class="p-2 border">Statut</th>
+                            <th class="p-2 border">Client</th>
+                            <th class="p-2 border">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="account : ${accounts}" class="hover:bg-gray-50">
+                            <td class="p-2 border" th:text="${account.number}"></td>
+                            <td class="p-2 border" th:text="${account.balance}"></td>
+                            <td class="p-2 border" th:text="${account.typeAccount}"></td>
+                            <td class="p-2 border" th:text="${account.status}"></td>
+                            <td class="p-2 border" th:text="${account.client != null ? account.client.name : 'N/A'}"></td>
+                            <td class="p-2 border flex space-x-2">
+                                <button type="button"
+                                        class="text-blue-600 hover:underline"
+                                        th:onclick="|openModal('editAccountModal__${account.id}')|">
+                                    Modifier
+                                </button>
+
+                                <form th:action="@{|/dashboard/account/deleteAccount/${account.id}|}" method="post">
+                                    <input type="hidden" name="id" th:value="${account.id}" />
+                                    <button type="submit" class="text-red-600 hover:underline bg-transparent border-0 p-0">
+                                        Supprimer
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+                        <!-- Modal Modifier -->
+                        <tr th:each="account : ${accounts}">
+                            <td colspan="6">
+                                <div th:id="'editAccountModal__' + ${account.id}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                    <div class="bg-white p-6 rounded-lg w-96">
+                                        <h2 class="text-xl font-bold mb-4">Modifier Compte</h2>
+                                        <form th:action="@{|/dashboard/account/updateAccount/${account.id}|}" method="post">
+                                            <input type="hidden" name="id" th:value="${account.id}">
+
+                                            <input type="text" name="number" th:value="${account.number}" class="w-full border p-2 rounded mb-2" placeholder="Numéro">
+                                            <input type="text" name="balance" th:value="${account.balance}" class="w-full border p-2 rounded mb-2" placeholder="Solde">
+
+                                            <!-- Type de compte -->
+                                            <select name="typeAccount" class="w-full border p-2 rounded mb-2">
+                                                <option value="" disabled>-- Sélectionnez un type --</option>
+                                                <option th:each="type : ${T(ci.ada.enums.AccountType).values()}"
+                                                        th:value="${type}" th:text="${type}"
+                                                        th:selected="${type.name() eq account.typeAccount.name()}"></option>
+
+                                            </select>
+
+                                            <!-- Statut du compte -->
+                                            <select name="status" class="w-full border p-2 rounded mb-2">
+                                                <option value="" disabled>-- Sélectionnez un statut --</option>
+                                                <option th:each="status : ${T(ci.ada.enums.AccountStatus).values()}"
+                                                        th:value="${status}" th:text="${status}"
+                                                        th:selected="${status.name() eq account.status.name()}"></option>
+                                            </select>
+
+                                            <!-- Client -->
+                                            <select name="client.id" class="w-full border p-2 rounded mb-2">
+                                                <option value="" disabled>-- Sélectionnez un client --</option>
+                                                <option th:each="client : ${clients}"
+                                                        th:value="${client.id}" th:text="${client.name}"
+                                                        th:selected="${client.id == account.client?.id}"></option>
+                                            </select>
+
+                                            <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-500">Mettre à jour</button>
+                                        </form>
+                                        <button onclick="closeModal('editAccountModal__[[${account.id}]]')" class="mt-4 text-gray-600 hover:underline">Annuler</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Modal Ajouter -->
+            <div id="addAccountModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div class="bg-white p-6 rounded-lg w-96">
+                    <h2 class="text-xl font-bold mb-4">Ajouter un Compte</h2>
+                    <form class="space-y-4" th:action="@{/dashboard/account/addAccount}" th:object="${account}" method="post">
+                        <input type="text" placeholder="Numéro" th:field="*{number}" class="w-full border p-2 rounded">
+                        <input type="text" placeholder="Solde" th:field="*{balance}" class="w-full border p-2 rounded">
+
+                        <!-- Type de compte -->
+                        <select th:field="*{typeAccount}" class="w-full border p-2 rounded">
+                            <option value="" disabled selected>-- Sélectionnez un type --</option>
+                            <option th:each="type : ${T(ci.ada.enums.AccountType).values()}"
+                                    th:value="${type}" th:text="${type}"></option>
+                        </select>
+
+                        <!-- Statut du compte -->
+                        <select th:field="*{status}" class="w-full border p-2 rounded">
+                            <option value="" disabled selected>-- Sélectionnez un statut --</option>
+                            <option th:each="status : ${T(ci.ada.enums.AccountStatus).values()}"
+                                    th:value="${status}" th:text="${status}"></option>
+                        </select>
+
+                        <!-- Client -->
+                        <select th:field="*{client.id}" class="w-full border p-2 rounded">
+                            <option value="" disabled selected>-- Sélectionnez un client --</option>
+                            <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
+                        </select>
+
+                        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-500">Enregistrer</button>
+                    </form>
+                    <button onclick="closeModal('addAccountModal')" class="mt-4 text-gray-600 hover:underline">Annuler</button>
+                </div>
+            </div>
+
+            <!-- JS modals -->
+            <script>
+                function openModal(id) { document.getElementById(id).classList.remove("hidden"); }
+                function closeModal(id) { document.getElementById(id).classList.add("hidden"); }
+            </script>
+        </main>
+
+        <div th:replace="fragments :: footer"></div>
+    </div>
+</div>
+</body>
+</html>

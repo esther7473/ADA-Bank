@@ -1,0 +1,56 @@
+/* Reset */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:Arial,Helvetica,sans-serif;color:#1a1a1a;background:#fff;line-height:1.6;}
+
+/* Header */
+.header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px 60px;background:#003c2f;color:#fff;
+}
+.logo{font-size:22px;font-weight:bold;}
+.logo span{color:#00ffb3;}
+.nav a{margin:0 15px;color:#fff;text-decoration:none;font-weight:500;}
+.nav a:hover{color:#00ffb3;}
+.btn{padding:10px 20px;border:none;border-radius:6px;background:#00c48c;color:#fff;cursor:pointer;}
+.btn-light{background:#fff;color:#003c2f;}
+
+/* Hero */
+.hero{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:80px 60px;background:linear-gradient(135deg,#003c2f,#007c60);
+    color:#fff;
+}
+.hero-text{max-width:50%;}
+.hero-text h1{font-size:42px;margin-bottom:20px;}
+.hero-text p{font-size:18px;margin-bottom:20px;}
+.hero-form{display:flex;gap:10px;}
+.hero-form input{padding:10px;border-radius:6px;border:none;flex:1;}
+.hero-img img{max-width:380px;}
+
+/* Services */
+.services{text-align:center;padding:80px 60px;background:#f9f9f9;}
+.services h2{font-size:28px;margin-bottom:10px;}
+.services p{color:#666;margin-bottom:40px;}
+.services-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:30px;
+}
+.service{background:#fff;padding:20px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+.service .icon{font-size:32px;margin-bottom:10px;}
+
+/* Features */
+.features{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:80px 60px;background:#fff;
+}
+.features-text{max-width:50%;}
+.features-text h2{font-size:28px;margin-bottom:15px;}
+.features-text ul{list-style:none;margin-top:15px;}
+.features-text li{margin-bottom:10px;}
+.features-card{
+    background:#003c2f;color:#fff;padding:30px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+.invoice .badge{background:#00c48c;color:#fff;padding:4px 8px;border-radius:4px;}
+.amount{font-size:24px;font-weight:bold;margin-top:10px;color:#00ffb3;}
+
+/* Footer */
+.footer{text-align:center;padding:20px;background:#003c2f;color:#fff;}

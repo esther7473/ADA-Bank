@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Fragments ADA Bank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/6e50979847.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<!-- 🟢 Header -->
+<div th:fragment="header">
+    <header class="bg-white shadow p-4 flex justify-between items-center">
+        <h1 class="text-xl font-semibold text-gray-800">Gestion des Banques</h1>
+        <div class="flex items-center space-x-4">
+            <button class="text-gray-500">🔔</button>
+            <span class="font-medium">Admin</span>
+            <img src="https://via.placeholder.com/32" class="rounded-full" alt="profil">
+        </div>
+    </header>
+</div>
+
+<!-- 🟢 Sidebar -->
+<div th:fragment="sidebar">
+    <aside class="w-64 bg-green-700 text-white flex flex-col h-full">
+        <div class="p-6 text-2xl font-bold">ADA Bank</div>
+        <nav class="flex-1">
+            <ul class="space-y-2">
+                <li><a th:href="@{/dashboard/bank}" class="block py-2 px-4 hover:bg-green-600 rounded"><i class="fa-regular fa-building-columns"></i>🏦 Banques</a></li>
+                <li><a th:href="@{/dashboard/client}" class="block py-2 px-4 hover:bg-green-600 rounded">👥 Clients</a></li>
+                <li><a th:href="@{/dashboard/account}" class="block py-2 px-4 hover:bg-green-600 rounded">💳 Comptes</a></li>
+                <li><a th:href="@{/dashboard/transaction}" class="block py-2 px-4 hover:bg-green-600 rounded">💰 Transactions</a></li>
+            </ul>
+        </nav>
+        <!--div class="p-4 border-t border-green-600">
+            <button class="w-full py-2 bg-green-500 rounded hover:bg-green-400">Se déconnecter</button>
+        </div-->
+    </aside>
+</div>
+
+<!-- 🟢 Footer -->
+<div th:fragment="footer">
+    <footer class="bg-white border-t p-4 text-center text-gray-600 ">
+        © 2025 ADA Bank - Tous droits réservés
+    </footer>
+</div>
+
+</body>
+</html>
