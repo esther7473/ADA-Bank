@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,5 +66,46 @@ public class BankService {
         }catch (Exception e){
             throw new RuntimeException("Error deleting bank");
         }
+    }
+
+    public List<Bank> findAllTop15Banks() {
+        try {
+            return bankRepository.findAll(Sort.by("numbreClient").descending());
+        }catch (Exception e){
+            throw new RuntimeException("Error finding banks");
+        }
+    }
+
+    public List<Bank> findAllBanksByVille(String ville) {
+        try {
+            return bankRepository.findBanksByVille(ville);
+        }catch (Exception e){
+            throw new RuntimeException("Error finding banks");
+        }
+    }
+
+    public List<Bank> findAllBanksByNumbreClient(Integer numbreClient) {
+        try{
+            return bankRepository.findAllByNumbreClient(numbreClient);
+        }catch (Exception e){throw new RuntimeException("Error finding banks");}
+    }
+
+    public List<Bank> findBank(String search) {
+        try{
+            return bankRepository.findAllByPays(search);
+        }catch (Exception e){throw new RuntimeException("Error finding banks");}
+    }
+
+    // Méthode de recherche par mot-clé
+    public List<Bank> searchBanks(String keyword) {
+        try{
+            if (keyword == null || keyword.isEmpty()) {
+                return bankRepository.findAll();
+            }
+            return bankRepository.findByNomContainingIgnoreCaseOrVilleContainingIgnoreCaseOrPaysContainingIgnoreCase(
+                    keyword, keyword, keyword
+            );
+        }catch (Exception e){throw new RuntimeException("Error finding banks");}
+
     }
 }

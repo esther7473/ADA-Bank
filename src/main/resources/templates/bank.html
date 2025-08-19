@@ -15,16 +15,8 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col">
         <!-- 🟢 Header -->
-        <div id="header">
-            <header class="bg-white shadow p-4 flex justify-between items-center">
-                <h1 class="text-xl font-semibold text-gray-800">Gestion des Banques</h1>
-                <div class="flex items-center space-x-4">
-                    <button class="text-gray-500">🔔</button>
-                    <span class="font-medium">Admin</span>
-                    <img src="https://via.placeholder.com/32" class="rounded-full" alt="profil">
-                </div>
-            </header>
-        </div>
+        <div th:replace="fragments :: header"></div>
+
 
         <!-- Content -->
         <main class="p-6" id="page-content">
@@ -44,15 +36,15 @@
                 </div>
 
                 <!-- Tableau -->
-                <div class="bg-white shadow rounded-lg p-4">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <h3 class="text-lg font-semibold mb-2">Liste des Banques</h3>
                     <div th:if="${#lists.isEmpty(banks)}" class="h-20 text-pink-400">
                         Aucune banque trouvée dans la base de données.
                     </div>
-                    <table th:if="${!#lists.isEmpty(banks)}"  class="w-full border">
-                        <thead class="bg-green-100">
+                    <table th:if="${!#lists.isEmpty(banks)}"  class="w-full text-sm text-left  rtl:text-right text-gray-500 dark:text-gray-400 mx-30 ">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th class="p-2 border">Nom</th>
+                            <th scope="col" class="px-6 py-3">Nom</th>
                             <th class="p-2 border">Pays</th>
                             <th class="p-2 border">ville</th>
                             <th class="p-2 border">Email</th>

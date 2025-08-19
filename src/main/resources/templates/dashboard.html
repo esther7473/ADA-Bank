@@ -25,19 +25,19 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="bg-white p-4 rounded-lg shadow">
                         <p class="text-gray-500">Banques</p>
-                        <p class="text-2xl font-bold">5</p>
+                        <p class="text-2xl font-bold" th:text="${banks.size()}"></p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow">
                         <p class="text-gray-500">Clients</p>
-                        <p class="text-2xl font-bold">2</p>
+                        <p class="text-2xl font-bold" th:text="${clients.size()}"></p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow">
                         <p class="text-gray-500">Comptes</p>
-                        <p class="text-2xl font-bold">1</p>
+                        <p class="text-2xl font-bold" th:text="${accounts.size()}"></p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow">
-                        <p class="text-gray-500">Volume</p>
-                        <p class="text-2xl font-bold">500 000,00 €</p>
+                        <p class="text-gray-500">Volume de transactions</p>
+                        <p class="text-2xl font-bold" th:text="${volume} + ' F CFA'"> </p>
                     </div>
                 </div>
 
@@ -58,13 +58,13 @@
                                     <th class="p-2 border-b">Nombre de clients</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody th:each="bank : ${top15banks}" >
                                 <tr class="hover:bg-gray-50">
-                                    <td class="p-2 border-b">BACI Yopougon</td>
-                                    <td class="p-2 border-b">CI / Abidjan</td>
-                                    <td class="p-2 border-b">undefined</td>
-                                    <td class="p-2 border-b">0</td>
-                                    <td class="p-2 border-b">0</td>
+                                    <td class="p-2 border-b" th:text="${bank.nom}"></td>
+                                    <td class="p-2 border-b" th:text="${bank.pays}">/td>
+                                    <td class="p-2 border-b" th:text="${bank.ville}"></td>
+                                    <td class="p-2 border-b" th:text="${bank.createAt}">/td>
+                                    <td class="p-2 border-b" th:text="${bank.numbreClient}"></td>
                                 </tr>
                                 <tr class="hover:bg-gray-50">
                                     <td class="p-2 border-b">SIB cocody</td>

@@ -11,7 +11,10 @@
 <!-- 🟢 Header -->
 <div th:fragment="header">
     <header class="bg-white shadow p-4 flex justify-between items-center">
-        <h1 class="text-xl font-semibold text-gray-800">Gestion des Banques</h1>
+        <h1 class="text-xl font-semibold text-gray-800 inline-flex items-center ">
+            <img th:src="@{/assets/logo-png.png}" alt="logo" class="w-12 h-12">
+            Dashboard
+        </h1>
         <div class="flex items-center space-x-4">
             <button class="text-gray-500">🔔</button>
             <span class="font-medium">Admin</span>
@@ -23,7 +26,10 @@
 <!-- 🟢 Sidebar -->
 <div th:fragment="sidebar">
     <aside class="w-64 bg-green-700 text-white flex flex-col h-full">
-        <div class="p-6 text-2xl font-bold">ADA Bank</div>
+        <div class="p-6 text-2xl  rounded-sm font-bold bg-white inline-flex justify-center items-center">
+            <img th:src="@{/assets/txtLogo-png.png}" alt="logo" class="w-full ">
+            <a th:href="@{/dashboard}">ADA Bank</a>
+        </div>
         <nav class="flex-1">
             <ul class="space-y-2">
                 <li><a th:href="@{/dashboard/bank}" class="block py-2 px-4 hover:bg-green-600 rounded"><i class="fa-regular fa-building-columns"></i>🏦 Banques</a></li>

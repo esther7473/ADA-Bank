@@ -15,17 +15,7 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col">
         <!-- Header -->
-        <!-- 🟢 Header -->
-        <div id="header">
-            <header class="bg-white shadow p-4 flex justify-between items-center">
-                <h1 class="text-xl font-semibold text-gray-800">Gestion des Transaction</h1>
-                <div class="flex items-center space-x-4">
-                    <button class="text-gray-500">🔔</button>
-                    <span class="font-medium">Admin</span>
-                    <img src="https://via.placeholder.com/32" class="rounded-full" alt="profil">
-                </div>
-            </header>
-        </div>
+        <div th:replace="fragments :: header"></div>
 
         <!-- Content -->
         <main class="p-6" id="page-content">

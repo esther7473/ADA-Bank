@@ -16,16 +16,8 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col">
         <!-- 🟢 Header -->
-        <div id="header">
-            <header class="bg-white shadow p-4 flex justify-between items-center">
-                <h1 class="text-xl font-semibold text-gray-800">Gestion des Comptes</h1>
-                <div class="flex items-center space-x-4">
-                    <button class="text-gray-500">🔔</button>
-                    <span class="font-medium">Admin</span>
-                    <img src="https://via.placeholder.com/32" class="rounded-full" alt="profil">
-                </div>
-            </header>
-        </div>
+        <div th:replace="fragments :: header"></div>
+
 
         <!-- Content -->
         <main class="p-6" id="page-content">
@@ -97,13 +89,15 @@
                                             <input type="text" name="balance" th:value="${account.balance}" class="w-full border p-2 rounded mb-2" placeholder="Solde">
 
                                             <!-- Type de compte -->
-                                            <select name="typeAccount" class="w-full border p-2 rounded mb-2">
-                                                <option value="" disabled>-- Sélectionnez un type --</option>
-                                                <option th:each="type : ${T(ci.ada.enums.AccountType).values()}"
-                                                        th:value="${type}" th:text="${type}"
-                                                        th:selected="${type.name() eq account.typeAccount.name()}"></option>
+                                            <label>
+                                                <select name="typeAccount" class="w-full border p-2 rounded mb-2">
+                                                    <option value="" disabled>-- Sélectionnez un type --</option>
+                                                    <option th:each="type : ${T(ci.ada.enums.AccountType).values()}"
+                                                            th:value="${type}" th:text="${type}"
+                                                            th:selected="${type.name() eq account.typeAccount.name()}"></option>
 
-                                            </select>
+                                                </select>
+                                            </label>
 
                                             <!-- Statut du compte -->
                                             <select name="status" class="w-full border p-2 rounded mb-2">

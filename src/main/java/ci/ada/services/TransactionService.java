@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,14 @@ public class TransactionService {
 
     public void deleteTransactionById(Long id) {
         transactionRepository.deleteById(id);
+    }
+
+    public BigDecimal totaltransactionVolume(){
+        BigDecimal total = findAllTransactions().stream()
+                .map(Transaction::getMontant)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return total.setScale(2, RoundingMode.HALF_UP);
     }
 
 }

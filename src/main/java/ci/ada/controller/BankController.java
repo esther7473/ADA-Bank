@@ -23,13 +23,6 @@ public class BankController {
 
     private BankService bankService;
 
-  /*  @GetMapping
-    public String showBank(Model model){
-        model.addAttribute("bank", new Bank());
-        return "bank";
-    }
-
-   */
     @GetMapping
     public String showAllBanks(Model model){
         List<Bank> banks = bankService.findAllBanks();
@@ -40,6 +33,14 @@ public class BankController {
         model.addAttribute("banks", banks);
         model.addAttribute("bank", new Bank());
 
+        return "bank";
+    }
+
+    @GetMapping("/searchBanks")
+    public String searchBanks(@RequestParam(name = "search", required = false) String keyword, Model model) {
+        List<Bank> filteredBanks = bankService.searchBanks(keyword);
+        model.addAttribute("filteredBanks", filteredBanks);
+        model.addAttribute("keyword", keyword);
         return "bank";
     }
 
@@ -79,5 +80,8 @@ public class BankController {
         bankService.deleteBankById(id);
         return "redirect:/dashboard/bank";
     }
+
+
+
 
 }
