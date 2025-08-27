@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>E‑Banking Platform – Thème Vert</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind config (extend with custom green palette + animations)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b'
+                        }
+                    },
+                    keyframes: {
+                        floaty: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '0% 50%' },
+                            '100%': { backgroundPosition: '100% 50%' }
+                        },
+                        fadeUp: {
+                            '0%': { opacity: 0, transform: 'translateY(24px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        }
+                    },
+                    animation: {
+                        floaty: 'floaty 6s ease-in-out infinite',
+                        shimmer: 'shimmer 6s linear infinite',
+                        fadeUp: 'fadeUp .6s ease-out forwards'
+                    },
+                    boxShadow: {
+                        glow: '0 0 0 2px rgba(16,185,129,.15), 0 10px 40px -10px rgba(16,185,129,.35)'
+                    },
+                    backgroundImage: {
+                        'grid': "linear-gradient(transparent 0, transparent 23px, rgba(16,185,129,.1) 24px), linear-gradient(90deg, transparent 0, transparent 23px, rgba(16,185,129,.1) 24px)",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth gradient background blobs */
+        .blob {
+            filter: blur(40px);
+            opacity: .35;
+            animation: blob 18s ease-in-out infinite;
+        }
+        @keyframes blob {
+            0%,100% { transform: translate(0,0) scale(1); }
+            33% { transform: translate(20px,-10px) scale(1.1); }
+            66% { transform: translate(-10px,10px) scale(0.95); }
+        }
+        /* Reveal on scroll utility */
+        .reveal { opacity: 0; transform: translateY(24px); transition: all .7s ease; }
+
+        /* Glass card */
+        .glass { backdrop-filter: blur(10px); background: linear-gradient(to bottom right, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.12); }
+    </style>
+</head>
+<body class="antialiased text-slate-100 bg-slate-950 selection:bg-primary-300/40">
+<!-- Global backdrop gradient -->
+<div class="fixed inset-0 -z-10">
+    <div class="absolute -top-32 -left-24 w-[48rem] h-[48rem] rounded-full bg-gradient-to-tr from-primary-500 via-emerald-400 to-lime-300 blob"></div>
+    <div class="absolute top-40 right-0 w-[44rem] h-[44rem] rounded-full bg-gradient-to-tr from-emerald-600 via-primary-500 to-teal-400 blob" style="animation-delay: -6s"></div>
+    <div class="absolute -bottom-40 left-1/3 w-[36rem] h-[36rem] rounded-full bg-gradient-to-tr from-lime-500 via-emerald-400 to-primary-500 blob" style="animation-delay: -3s"></div>
+    <div class="absolute inset-0 bg-grid bg-[length:24px_24px]"></div>
+</div>
+
+<!-- NAVBAR -->
+<header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/40 border-b border-white/10">
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        <a href="#" class="flex items-center gap-2">
+            <span class="inline-block w-8 h-8 rounded-xl bg-gradient-to-br from-primary-400 to-emerald-600 shadow-glow"></span>
+            <span class="text-white font-semibold">NeoBank Suite</span>
+        </a>
+        <ul class="hidden md:flex items-center gap-6 text-sm">
+            <li><a href="#features" class="hover:text-primary-300 transition">Fonctionnalités</a></li>
+            <li><a href="#admin" class="hover:text-primary-300 transition">Banques (Admin)</a></li>
+            <li><a href="#clients" class="hover:text-primary-300 transition">Clients</a></li>
+            <li><a href="#comparateur" class="hover:text-primary-300 transition">Comparer</a></li>
+            <li><a href="#contact" class="hover:text-primary-300 transition">Contact</a></li>
+        </ul>
+        <div class="flex items-center gap-3">
+            <a href="#demo" class="hidden sm:inline-flex items-center rounded-xl px-4 py-2 text-sm font-medium bg-white/10 hover:bg-white/15 border border-white/10 transition">Voir la démo</a>
+            <a href="#contact" class="inline-flex items-center rounded-xl px-4 py-2 text-sm font-semibold text-slate-900 bg-gradient-to-r from-primary-300 via-emerald-300 to-lime-300 hover:shadow-glow transition [background-size:200%_200%] animate-shimmer">Commencer</a>
+        </div>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="relative overflow-hidden">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+            <div>
+                <h1 class="text-4xl/tight md:text-6xl font-extrabold">
+                    Concevez, lancez et <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-300 via-emerald-300 to-lime-200 [background-size:200%_200%] animate-shimmer">opérez</span> votre e‑banking.
+                </h1>
+                <p class="mt-6 text-slate-300 max-w-xl">Suite digitale orientée <span class="text-primary-300">banques</span> et <span class="text-primary-300">clients</span> : onboarding, paiements, PFM, IA in‑app, et un comparateur pour choisir la meilleure banque.</p>
+                <div class="mt-8 flex flex-wrap gap-3">
+                    <a href="#comparateur" class="rounded-xl px-5 py-3 font-medium bg-white/10 hover:bg-white/15 border border-white/10">Comparer les banques</a>
+                    <a href="#features" class="rounded-xl px-5 py-3 font-semibold text-slate-900 bg-gradient-to-r from-primary-300 via-emerald-300 to-lime-300 [background-size:200%_200%] animate-shimmer">Explorer la plateforme</a>
+                </div>
+                <!-- KPIs -->
+                <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div class="glass rounded-2xl p-4 text-center">
+                        <div class="text-3xl font-bold" data-counter="45">0</div>
+                        <div class="text-xs text-slate-300 mt-1">Jours pour transformer</div>
+                    </div>
+                    <div class="glass rounded-2xl p-4 text-center">
+                        <div class="text-3xl font-bold" data-counter="5">0</div>
+                        <div class="text-xs text-slate-300 mt-1">x économies de coûts</div>
+                    </div>
+                    <div class="glass rounded-2xl p-4 text-center">
+                        <div class="text-3xl font-bold" data-counter="72">0</div>
+                        <div class="text-xs text-slate-300 mt-1">NPS de satisfaction</div>
+                    </div>
+                    <div class="glass rounded-2xl p-4 text-center">
+                        <div class="text-3xl font-bold" data-counter="28">0</div>
+                        <div class="text-xs text-slate-300 mt-1">des top 50 banques</div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="absolute -inset-6 rounded-3xl bg-gradient-to-tr from-primary-500/20 via-emerald-400/10 to-lime-300/10 blur-2xl"></div>
+                <div class="relative glass rounded-3xl p-4">
+                    <img src="https://images.unsplash.com/photo-1553729784-e91953dec042?q=80&w=1200&auto=format&fit=crop" alt="Dashboard" class="rounded-2xl shadow-glow animate-floaty"/>
+                    <div class="absolute -bottom-5 -right-5 glass rounded-2xl p-3 shadow-glow">
+                        <div class="text-xs text-slate-300">Assistant IA</div>
+                        <div class="text-sm font-semibold">Conseils PFM en temps réel</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BENEFITS / FEATURES OVERVIEW -->
+<section id="features" class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl md:text-4xl font-bold">Construisez la banque de demain, <span class="text-primary-300">dès aujourd'hui</span></h2>
+        <p class="mt-2 text-slate-300 max-w-2xl">Bibliothèque de capacités prêtes à l'emploi : onboarding, prêts, quotidien, PFM, open banking, paiements modernes.</p>
+        <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <!-- Card -->
+            <article class="glass rounded-2xl p-5 group hover:shadow-glow transition reveal">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-400 to-emerald-600 mb-4"></div>
+                <h3 class="font-semibold">Onboarding digital</h3>
+                <p class="text-sm text-slate-300 mt-1">KYC, vérification d'identité, parcours no‑code, e‑signature, scoring.</p>
+                <div class="mt-4 flex items-center gap-2 text-xs text-primary-200 opacity-0 group-hover:opacity-100 transition">Parcours flexibles • Omnicanal</div>
+            </article>
+            <article class="glass rounded-2xl p-5 group hover:shadow-glow transition reveal">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-400 to-emerald-600 mb-4"></div>
+                <h3 class="font-semibold">Origination de prêts</h3>
+                <p class="text-sm text-slate-300 mt-1">Simulation, décision automatisée, gestion des dossiers, conformité.</p>
+                <div class="mt-4 text-xs text-primary-200 opacity-0 group-hover:opacity-100 transition">Temps réel • API</div>
+            </article>
+            <article class="glass rounded-2xl p-5 group hover:shadow-glow transition reveal">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-400 to-emerald-600 mb-4"></div>
+                <h3 class="font-semibold">Banque au quotidien</h3>
+                <p class="text-sm text-slate-300 mt-1">Comptes, cartes, paiements instantanés, Request‑to‑Pay, Apple/Google Pay.</p>
+                <div class="mt-4 text-xs text-primary-200 opacity-0 group-hover:opacity-100 transition">Multi‑schémas • Sécurisé</div>
+            </article>
+            <article class="glass rounded-2xl p-5 group hover:shadow-glow transition reveal">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-400 to-emerald-600 mb-4"></div>
+                <h3 class="font-semibold">PFM & Open Banking</h3>
+                <p class="text-sm text-slate-300 mt-1">Aggregation de comptes, catégorisation, budgets, insights IA.</p>
+                <div class="mt-4 text-xs text-primary-200 opacity-0 group-hover:opacity-100 transition">Dashboards • Conseils</div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ADMIN (BANKS) -->
+<section id="admin" class="py-20 border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-8 items-center">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold">Espace <span class="text-primary-300">Banque / Admin</span></h2>
+                <p class="mt-3 text-slate-300">Créez et gérez votre banque digitale : produits, tarifs, règles, utilisateurs, conformité. Pilotez les KPI et le risque en temps réel.</p>
+                <ul class="mt-6 grid sm:grid-cols-2 gap-4">
+                    <li class="glass rounded-xl p-4 reveal">
+                        <div class="text-sm font-semibold">Gestion des produits</div>
+                        <p class="text-xs text-slate-300 mt-1">Comptes, prêts, cartes, packs, frais, workflows no‑code.</p>
+                    </li>
+                    <li class="glass rounded-xl p-4 reveal">
+                        <div class="text-sm font-semibold">Gouvernance & conformité</div>
+                        <p class="text-xs text-slate-300 mt-1">KYC/AML, traçabilité, rôles, audit, approbations.</p>
+                    </li>
+                    <li class="glass rounded-xl p-4 reveal">
+                        <div class="text-sm font-semibold">Automations & API</div>
+                        <p class="text-xs text-slate-300 mt-1">Intégrations Core, Open Banking, webhooks, sandbox développeur.</p>
+                    </li>
+                    <li class="glass rounded-xl p-4 reveal">
+                        <div class="text-sm font-semibold">Tableaux de bord</div>
+                        <p class="text-xs text-slate-300 mt-1">Acquisition, NPS, fraude, monétique, revenus.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="relative">
+                <div class="absolute -inset-6 rounded-3xl bg-gradient-to-tr from-primary-500/30 via-emerald-400/20 to-lime-300/20 blur-2xl"></div>
+                <div class="relative glass rounded-3xl p-5">
+                    <img src="https://images.unsplash.com/photo-1551286013-23c0edc8aa97?q=80&w=1200&auto=format&fit=crop" alt="Admin" class="rounded-2xl shadow-glow"/>
+                    <div class="absolute top-5 right-5 glass rounded-xl px-3 py-2 text-xs">Mode Sandbox</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CLIENTS FLOW -->
+<section id="clients" class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold">Parcours <span class="text-primary-300">Client</span></h2>
+                <ol class="mt-6 space-y-4">
+                    <li class="glass rounded-xl p-4 reveal">
+                        <div class="text-sm font-semibold">1) Choisir une banque</div>
+                        <p class="text-xs text-slate-300 mt-1">Filtrer par frais, cartes, taux, services. Comparer facilement (voir plus bas).</p>
+                    </li>
+                    <li class="glass rounded-xl p-4 reveal">
+                        <div class="text-sm font-semibold">2) Créer un compte</div>
+                        <p class="text-xs text-slate-300 mt-1">Onboarding 100% en ligne : pièces d'identité, selfie, justificatifs, signature.</p>
+                    </li>
+                    <li class="glass rounded-xl p-4 reveal">
+                        <div class="text-sm font-semibold">3) Activer les services</div>
+                        <p class="text-xs text-slate-300 mt-1">Carte, paiements instantanés, agrégation de comptes externes, budgets IA.</p>
+                    </li>
+                    <li class="glass rounded-xl p-4 reveal">
+                        <div class="text-sm font-semibold">4) Tableau de bord</div>
+                        <p class="text-xs text-slate-300 mt-1">Suivi PFM, notifications, objectifs. Assistant IA intégré.</p>
+                    </li>
+                </ol>
+            </div>
+            <div class="relative">
+                <div class="absolute -inset-6 rounded-3xl bg-gradient-to-tr from-primary-500/30 via-emerald-400/20 to-lime-300/20 blur-2xl"></div>
+                <div class="relative glass rounded-3xl p-5">
+                    <img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?q=80&w=1200&auto=format&fit=crop" alt="Mobile Banking" class="rounded-2xl shadow-glow"/>
+                    <div class="absolute -bottom-5 -left-5 glass rounded-2xl p-3 shadow-glow">
+                        <div class="text-xs text-slate-300">Paiements</div>
+                        <div class="text-sm font-semibold">Instantané • Apple/Google Pay</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COMPARATEUR DE BANQUES -->
+<section id="comparateur" class="py-20 border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl md:text-4xl font-bold">
+            Comparer les <span class="text-primary-300">banques</span>
+        </h2>
+        <p class="mt-1 text-slate-300">
+            Liste des banques injectée par Spring/Thymeleaf.
+        </p>
+
+        <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div th:each="bank : ${banks}"
+                 class="glass rounded-2xl p-5 hover:shadow-glow transition">
+                <div class="flex items-start justify-between gap-3">
+                    <div>
+                        <h3 class="font-semibold" th:text="${bank.name}">Bank name</h3>
+                        <p class="text-xs text-slate-400" th:text="${bank.tagline}">Tagline</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm">Frais mensuels</div>
+                        <div class="text-xl font-bold"
+                             th:text="${bank.fees == 0} ? 'Gratuit' : ${bank.fees} + '€'">—</div>
+                    </div>
+                </div>
+
+                <ul class="mt-4 text-sm space-y-1">
+                    <li th:text="'• Cartes: ' + ${bank.cards}">Cartes</li>
+                    <li th:text="'• Taux épargne: ' + ${bank.savings} + '%'">Épargne</li>
+                </ul>
+
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="text-xs">
+                        Note <span class="font-semibold" th:text="${bank.rating}">—</span>/5
+                    </div>
+                    <button class="rounded-xl px-4 py-2 text-sm font-semibold text-slate-900 bg-gradient-to-r from-primary-300 via-emerald-300 to-lime-300 [background-size:200%_200%] animate-shimmer">
+                        Choisir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- IA ASSISTANT -->
+<section id="ia" class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-center">
+        <div>
+            <h2 class="text-3xl md:text-4xl font-bold">Expériences propulsées par l'<span class="text-primary-300">IA</span></h2>
+            <p class="mt-2 text-slate-300">Assistant in‑app pour FAQ, autocomplétion intelligente, insights personnalisés et coaching PFM proactif.</p>
+            <div class="mt-6 grid sm:grid-cols-2 gap-4">
+                <div class="glass rounded-xl p-4 reveal">
+                    <div class="text-sm font-semibold">FAQ instantanées</div>
+                    <p class="text-xs text-slate-300 mt-1">Réponses en libre‑service 24/7.</p>
+                </div>
+                <div class="glass rounded-xl p-4 reveal">
+                    <div class="text-sm font-semibold">Insights personnalisés</div>
+                    <p class="text-xs text-slate-300 mt-1">Alertes, optimisations de frais, recommandations d'épargne.</p>
+                </div>
+                <div class="glass rounded-xl p-4 reveal">
+                    <div class="text-sm font-semibold">Prévention de fraude</div>
+                    <p class="text-xs text-slate-300 mt-1">Détection d'anomalies et scoring en temps réel.</p>
+                </div>
+                <div class="glass rounded-xl p-4 reveal">
+                    <div class="text-sm font-semibold">Parcours no‑code</div>
+                    <p class="text-xs text-slate-300 mt-1">Construisez/iterez les parcours sans déploiement.</p>
+                </div>
+            </div>
+        </div>
+        <div class="relative">
+            <div class="absolute -inset-6 rounded-3xl bg-gradient-to-tr from-primary-500/30 via-emerald-400/20 to-lime-300/20 blur-2xl"></div>
+            <div class="relative glass rounded-3xl p-5">
+                <img src="https://images.unsplash.com/photo-1517433456452-f9633a875f6f?q=80&w=1200&auto=format&fit=crop" alt="AI" class="rounded-2xl shadow-glow"/>
+                <div class="absolute top-5 left-5 glass rounded-xl px-3 py-2 text-xs">IA embarquée</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA CONTACT -->
+<section id="contact" class="py-20 border-t border-white/10">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold">Prêt à démarrer ?</h2>
+        <p class="mt-2 text-slate-300">Demandez une démo personnalisée et créez votre e‑banking en quelques semaines.</p>
+        <form class="mt-8 grid sm:grid-cols-2 gap-3 text-left">
+            <input type="text" placeholder="Nom" class="rounded-xl px-4 py-3 bg-white/5 border border-white/10 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-400"/>
+            <input type="email" placeholder="Email professionnel" class="rounded-xl px-4 py-3 bg-white/5 border border-white/10 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-400"/>
+            <input type="text" placeholder="Société" class="rounded-xl px-4 py-3 bg-white/5 border border-white/10 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-400 sm:col-span-2"/>
+            <textarea placeholder="Parlez‑nous de votre projet" rows="4" class="rounded-xl px-4 py-3 bg-white/5 border border-white/10 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-400 sm:col-span-2"></textarea>
+            <button class="rounded-xl px-5 py-3 font-semibold text-slate-900 bg-gradient-to-r from-primary-300 via-emerald-300 to-lime-300 [background-size:200%_200%] animate-shimmer sm:col-span-2">Demander une démo</button>
+        </form>
+    </div>
+</section>
+
+<footer class="py-10 text-center text-sm text-slate-400">
+    © 2025 NeoBank Suite — Inspiré par les meilleures pratiques de digital banking.
+</footer>
+
+<!-- Scripts: counters, reveal, mock comparator data -->
+<script>
+    // COUNTERS on view
+    const counters = document.querySelectorAll('[data-counter]');
+    const ioCounters = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.getAttribute('data-counter'), 10);
+                let current = 0;
+                const step = Math.max(1, Math.round(target / 60));
+                const interval = setInterval(() => {
+                    current += step;
+                    if (current >= target) { current = target; clearInterval(interval); }
+                    el.textContent = current;
+                }, 16);
+                ioCounters.unobserve(el);
+            }
+        })
+    }, { threshold: .5 });
+    counters.forEach(el => ioCounters.observe(el));
+
+    // REVEAL on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const ioReveal = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                ioReveal.unobserve(e.target);
+            }
+        })
+    }, { threshold: .25 });
+    revealEls.forEach(el => ioReveal.observe(el));
+
+    // COMPARATEUR — mock data & interactions
+    const data = [
+        { name: 'Banka', tagline: 'Mobile‑first', fees: 2.9, savings: 2.3, cards: ['Visa', 'Mastercard'], instant: true, rtp: true, apple: true, google: true, crypto: false, rating: 4.6 },
+        { name: 'GreenPay', tagline: 'Zéro papier', fees: 0, savings: 1.8, cards: ['Visa'], instant: true, rtp: true, apple: true, google: false, crypto: true, rating: 4.2 },
+        { name: 'SolidBank', tagline: 'Pro & PME', fees: 7.5, savings: 3.1, cards: ['Mastercard'], instant: true, rtp: false, apple: false, google: false, crypto: false, rating: 4.8 },
+        { name: 'LiteBank', tagline: 'Essentiels', fees: 1.5, savings: 1.2, cards: ['Visa'], instant: false, rtp: false, apple: true, google: true, crypto: false, rating: 3.9 },
+        { name: 'Orbit Finance', tagline: 'Multi‑devises', fees: 4.0, savings: 2.7, cards: ['Visa','Amex'], instant: true, rtp: true, apple: true, google: true, crypto: true, rating: 4.4 }
+    ];
+
+    const banksWrap = document.getElementById('banks');
+    const tpl = document.getElementById('bank-card');
+    const q = document.getElementById('q');
+    const sort = document.getElementById('sort');
+
+    function featuresText(b) {
+        const feats = [
+            `Cartes: ${b.cards.join(', ')}`,
+            `Taux épargne: ${b.savings}%`,
+            `${b.instant ? 'Paiements instantanés' : 'Virements SEPA'}`,
+            `${b.rtp ? 'Request‑to‑Pay' : 'RTP: non'}`,
+            `${b.apple ? 'Apple Pay' : 'Apple Pay: non'}`,
+            `${b.google ? 'Google Pay' : 'Google Pay: non'}`,
+            `${b.crypto ? 'Crypto' : 'Crypto: non'}`
+        ];
+        return feats;
+    }
+
+    function render(list) {
+        banksWrap.innerHTML = '';
+        list.forEach(b => {
+            const card = tpl.content.cloneNode(true);
+            card.querySelector('.bank-name').textContent = b.name;
+            card.querySelector('.bank-tagline').textContent = b.tagline;
+            card.querySelector('.bank-fees').textContent = (b.fees === 0 ? 'Gratuit' : b.fees.toFixed(2) + '€');
+            card.querySelector('.bank-rating').textContent = b.rating.toFixed(1);
+            const ul = card.querySelector('.bank-features');
+            featuresText(b).slice(0,4).forEach(t => {
+                const li = document.createElement('li');
+                li.textContent = '• ' + t;
+                ul.appendChild(li);
+            });
+            card.querySelector('.select-bank').addEventListener('click', () => {
+                alert(`Vous avez choisi ${b.name}. Lancement de l'onboarding…`);
+                document.getElementById('clients').scrollIntoView({ behavior: 'smooth' });
+            });
+            banksWrap.appendChild(card);
+        });
+    }
+
+    function applyFilters() {
+        const term = q.value.toLowerCase();
+        let list = data.filter(b => b.name.toLowerCase().includes(term) || b.tagline.toLowerCase().includes(term));
+        const sortBy = sort.value;
+        list.sort((a,b) => {
+            if (sortBy === 'fees') return a.fees - b.fees;
+            if (sortBy === 'savings') return b.savings - a.savings;
+            return b.rating - a.rating;
+        });
+        render(list);
+    }
+
+    q.addEventListener('input', applyFilters);
+    sort.addEventListener('change', applyFilters);
+    render(data);
+</script>
+</body>
+</html>

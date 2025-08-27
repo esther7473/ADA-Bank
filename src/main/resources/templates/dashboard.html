@@ -25,19 +25,19 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="bg-white p-4 rounded-lg shadow">
                         <p class="text-gray-500">Banques</p>
-                        <p class="text-2xl font-bold" th:text="${banks.size()}"></p>
+                        <p class="text-2xl font-bold" ></p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow">
                         <p class="text-gray-500">Clients</p>
-                        <p class="text-2xl font-bold" th:text="${clients.size()}"></p>
+                        <p class="text-2xl font-bold" ></p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow">
                         <p class="text-gray-500">Comptes</p>
-                        <p class="text-2xl font-bold" th:text="${accounts.size()}"></p>
+                        <p class="text-2xl font-bold" ></p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow">
                         <p class="text-gray-500">Volume de transactions</p>
-                        <p class="text-2xl font-bold" th:text="${volume} + ' F CFA'"> </p>
+                        <p class="text-2xl font-bold" >ddd </p>
                     </div>
                 </div>
 
@@ -56,15 +56,15 @@
                                     <th class="p-2 border-b">Ville</th>
                                     <th class="p-2 border-b">Date de Creation</th>
                                     <th class="p-2 border-b">Nombre de clients</th>
-                                </tr>
+                                </tr>th:text="${bank.pays}"
                                 </thead>
                                 <tbody th:each="bank : ${top15banks}" >
                                 <tr class="hover:bg-gray-50">
-                                    <td class="p-2 border-b" th:text="${bank.nom}"></td>
-                                    <td class="p-2 border-b" th:text="${bank.pays}">/td>
-                                    <td class="p-2 border-b" th:text="${bank.ville}"></td>
-                                    <td class="p-2 border-b" th:text="${bank.createAt}">/td>
-                                    <td class="p-2 border-b" th:text="${bank.numbreClient}"></td>
+                                    <td class="p-2 border-b" ></td>
+                                    <td class="p-2 border-b" ></td>
+                                    <td class="p-2 border-b" ></td>
+                                    <td class="p-2 border-b" ></td>
+                                    <td class="p-2 border-b" ></td>
                                 </tr>
                                 <tr class="hover:bg-gray-50">
                                     <td class="p-2 border-b">SIB cocody</td>

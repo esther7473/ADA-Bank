@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Client - E-Banking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900">
+
+<div class="flex min-h-screen">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="w-64 bg-gradient-to-b from-emerald-500 via-green-500 to-lime-400 text-white flex flex-col">
+        <div class="p-6 font-bold text-xl">MyBank</div>
+        <nav class="flex-1 px-4 py-6 space-y-3">
+            <a href="#" class="block px-3 py-2 rounded-lg bg-white/20 font-medium">🏠 Accueil</a>
+            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-white/10">💳 Comptes</a>
+            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-white/10">💸 Transactions</a>
+            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-white/10">📑 Historique</a>
+            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-white/10">⚙️ Paramètres</a>
+        </nav>
+        <div class="p-4 text-sm text-white/80 border-t border-white/30">© 2025 e-Banking</div>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <div class="flex-1 flex flex-col">
+
+        <!-- ===== HEADER ===== -->
+        <header class="bg-white shadow flex items-center justify-between px-6 py-3 relative">
+            <h1 class="text-xl font-bold">Bonjour, Jean Dupont 👋</h1>
+            <div class="flex items-center gap-4">
+
+                <!-- Notifications -->
+                <div class="relative">
+                    <button id="notifBtn" class="relative">
+                        🔔
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
+                    </button>
+
+                    <!-- Notification dropdown -->
+                    <div id="notifDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg border z-50">
+                        <div class="p-3 font-semibold border-b">Notifications</div>
+                        <ul class="max-h-60 overflow-y-auto text-sm">
+                            <li class="px-4 py-2 hover:bg-gray-50">✅ Votre virement a été validé</li>
+                            <li class="px-4 py-2 hover:bg-gray-50">⚠️ Nouveau message de la banque</li>
+                            <li class="px-4 py-2 hover:bg-gray-50">📥 Dépôt de 500 € effectué</li>
+                        </ul>
+                        <div class="p-2 text-center text-xs text-gray-500 border-t">Voir toutes les notifications</div>
+                    </div>
+                </div>
+
+                <!-- Chatbot -->
+                <button class="px-3 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600">
+                    🤖 Chatbot
+                </button>
+
+                <!-- Profil -->
+                <div class="flex items-center gap-2">
+                    <img src="https://i.pravatar.cc/40" class="w-8 h-8 rounded-full" alt="avatar">
+                    <span class="font-medium">Jean Dupont</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== CONTENT ===== -->
+        <main class="flex-1 p-6 space-y-6">
+
+            <!-- Aperçu comptes -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl shadow p-5">
+                    <h3 class="text-gray-500 text-sm">Compte courant</h3>
+                    <p class="text-2xl font-bold text-primary-600">2 340 €</p>
+                    <button class="mt-3 text-sm text-primary-600 hover:underline">Modifier</button>
+                </div>
+                <div class="bg-white rounded-2xl shadow p-5">
+                    <h3 class="text-gray-500 text-sm">Compte épargne</h3>
+                    <p class="text-2xl font-bold text-primary-600">8 120 €</p>
+                    <button class="mt-3 text-sm text-primary-600 hover:underline">Modifier</button>
+                </div>
+                <div class="bg-white rounded-2xl shadow p-5">
+                    <h3 class="text-gray-500 text-sm">Dernière action</h3>
+                    <p class="text-lg">Virement en attente de validation</p>
+                </div>
+            </div>
+
+            <!-- Actions rapides -->
+            <div class="bg-white rounded-2xl shadow p-6">
+                <h2 class="text-lg font-bold mb-4">Actions rapides</h2>
+                <div class="flex gap-4">
+                    <button class="px-4 py-2 bg-primary-500 text-white rounded-lg">➕ Dépôt</button>
+                    <button class="px-4 py-2 bg-primary-500 text-white rounded-lg">➖ Retrait</button>
+                    <button class="px-4 py-2 bg-primary-500 text-white rounded-lg">🔄 Virement</button>
+                </div>
+                <p class="mt-2 text-xs text-gray-500">⚠️ Les virements doivent être validés par l’administrateur.</p>
+            </div>
+
+            <!-- Historique transactions -->
+            <div class="bg-white rounded-2xl shadow p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold">Historique des transactions</h2>
+                    <div class="flex gap-2">
+                        <input type="text" placeholder="Filtrer..." class="border rounded-lg px-3 py-1 text-sm">
+                        <button class="px-3 py-1 bg-gray-100 rounded-lg text-sm">Filtrer</button>
+                    </div>
+                </div>
+                <table class="w-full text-sm">
+                    <thead class="border-b">
+                    <tr class="text-left">
+                        <th class="py-2">Date</th>
+                        <th>Type</th>
+                        <th>Montant</th>
+                        <th>Statut</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="border-b">
+                        <td class="py-2">18/08/2025</td>
+                        <td>Dépôt</td>
+                        <td class="text-green-600">+500 €</td>
+                        <td>Validé</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="py-2">15/08/2025</td>
+                        <td>Virement</td>
+                        <td class="text-red-600">-200 €</td>
+                        <td>En attente</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="mt-4 flex gap-2">
+                    <button class="px-3 py-2 bg-gray-100 rounded-lg">🖨️ Imprimer relevé</button>
+                    <button class="px-3 py-2 bg-gray-100 rounded-lg">⬇️ Exporter PDF</button>
+                </div>
+            </div>
+
+            <!-- Historique actions -->
+            <div class="bg-white rounded-2xl shadow p-6">
+                <h2 class="text-lg font-bold mb-4">Historique des actions</h2>
+                <ul class="space-y-2 text-sm">
+                    <li>✅ Modification profil (hier)</li>
+                    <li>📤 Virement créé (15/08)</li>
+                    <li>📥 Dépôt effectué (10/08)</li>
+                </ul>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<script>
+    // Gestion ouverture / fermeture du dropdown notifications
+    const notifBtn = document.getElementById('notifBtn');
+    const notifDropdown = document.getElementById('notifDropdown');
+
+    notifBtn.addEventListener('click', () => {
+        notifDropdown.classList.toggle('hidden');
+    });
+
+    // Fermer si on clique ailleurs
+    document.addEventListener('click', (e) => {
+        if (!notifBtn.contains(e.target) && !notifDropdown.contains(e.target)) {
+            notifDropdown.classList.add('hidden');
+        }
+    });
+</script>
+
+</body>
+</html>

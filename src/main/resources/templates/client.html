@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,6 @@
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col">
-
 
         <!-- 🟢 Header -->
         <div th:replace="fragments :: header"></div>
@@ -39,10 +38,12 @@
                 <!-- Tableau -->
                 <div class="bg-white shadow rounded-lg p-4">
                     <h3 class="text-lg font-semibold mb-2">Liste des Clients</h3>
-                    <div th:if="${#lists.isEmpty(clients)}" class="h-20 text-pink-400">
+
+                    <div class="h-20 text-pink-400">
                         Aucun client trouvé dans la base de données.
                     </div>
-                    <table th:if="${!#lists.isEmpty(clients)}" class="w-full border">
+
+                    <table class="w-full border">
                         <thead class="bg-green-100">
                         <tr>
                             <th class="p-2 border">ID</th>
@@ -55,22 +56,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="client : ${clients}" class="hover:bg-gray-50">
-                            <td class="p-2 border" th:text="${client.id}"></td>
-                            <td class="p-2 border" th:text="${client.name}"></td>
-                            <td class="p-2 border" th:text="${client.prenom}"></td>
-                            <td class="p-2 border" th:text="${client.email}"></td>
-                            <td class="p-2 border" th:text="${client.clientNumber}"></td>
-                            <td class="p-2 border" th:text="${client.bank != null ? client.bank.nom : 'N/A'}"></td>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-2 border"></td>
+                            <td class="p-2 border"></td>
+                            <td class="p-2 border"></td>
+                            <td class="p-2 border"></td>
+                            <td class="p-2 border"></td>
+                            <td class="p-2 border"></td>
                             <td class="p-2 border flex space-x-2">
-                                <button type="button"
-                                        class="text-blue-600 hover:underline"
-                                        th:onclick="|openModal('editClientModal__${client.id}')|">
+                                <button type="button" class="text-blue-600 hover:underline">
                                     Modifier
                                 </button>
 
-                                <form th:action="@{|/dashboard/client/deleteClient/${client.id}|}" method="post">
-                                    <input type="hidden" name="id" th:value="${client.id}" />
+                                <form method="post">
+                                    <input type="hidden" name="id"/>
                                     <button type="submit" class="text-red-600 hover:underline bg-transparent border-0 p-0">
                                         Supprimer
                                     </button>
@@ -79,29 +78,28 @@
                         </tr>
 
                         <!-- Modal Modifier -->
-                        <tr th:each="client : ${clients}">
+                        <tr>
                             <td colspan="6">
-                                <div th:id="'editClientModal__' + ${client.id}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                <div class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                                     <div class="bg-white p-6 rounded-lg w-96">
                                         <h2 class="text-xl font-bold mb-4">Modifier Client</h2>
-                                        <form th:action="@{|/dashboard/client/updateClient/${client.id}|}" method="post">
-                                            <input type="hidden" name="id" th:value="${client.id}">
-                                            <input type="text" name="name" th:value="${client.name}" class="w-full border p-2 rounded mb-2" placeholder="Nom">
-                                            <input type="text" name="name" th:value="${client.prenom}" class="w-full border p-2 rounded mb-2" placeholder="Nom">
-                                            <input type="email" name="email" th:value="${client.email}" class="w-full border p-2 rounded mb-2" placeholder="Email">
-                                            <input type="text" name="phone" th:value="${client.clientNumber}" class="w-full border p-2 rounded mb-2" placeholder="Téléphone">
+                                        <form method="post">
+                                            <input type="hidden" name="id">
+                                            <input type="text" name="name" class="w-full border p-2 rounded mb-2" placeholder="Nom">
+                                            <input type="text" name="prenom" class="w-full border p-2 rounded mb-2" placeholder="Prénom">
+                                            <input type="email" name="email" class="w-full border p-2 rounded mb-2" placeholder="Email">
+                                            <input type="text" name="phone" class="w-full border p-2 rounded mb-2" placeholder="Téléphone">
 
                                             <!-- Banque -->
                                             <select name="bank.id" class="w-full border p-2 rounded mb-2">
                                                 <option value="" disabled>-- Sélectionnez une banque --</option>
-                                                <option th:each="bank : ${banks}"
-                                                        th:value="${bank.id}" th:text="${bank.nom}"
-                                                        th:selected="${bank.id == client.bank?.id}"></option>
+                                                <option>Banque A</option>
+                                                <option>Banque B</option>
                                             </select>
 
                                             <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-500">Mettre à jour</button>
                                         </form>
-                                        <button onclick="closeModal('editClientModal__[[${client.id}]]')" class="mt-4 text-gray-600 hover:underline">Annuler</button>
+                                        <button onclick="closeModal('editClientModal')" class="mt-4 text-gray-600 hover:underline">Annuler</button>
                                     </div>
                                 </div>
                             </td>
@@ -115,16 +113,17 @@
             <div id="addClientModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div class="bg-white p-6 rounded-lg w-96">
                     <h2 class="text-xl font-bold mb-4">Ajouter un Client</h2>
-                    <form class="space-y-4" th:action="@{/dashboard/client/addClient}" th:object="${client}" method="post">
-                        <input type="text" placeholder="Nom" th:field="*{name}" class="w-full border p-2 rounded">
-                        <input type="text" placeholder="Nom" th:field="*{prenom}" class="w-full border p-2 rounded">
-                        <input type="email" placeholder="Email" th:field="*{email}" class="w-full border p-2 rounded">
-                        <input type="text" placeholder="Téléphone" th:field="*{clientNumber}" class="w-full border p-2 rounded">
+                    <form class="space-y-4" method="post">
+                        <input type="text" placeholder="Nom" class="w-full border p-2 rounded">
+                        <input type="text" placeholder="Prénom" class="w-full border p-2 rounded">
+                        <input type="email" placeholder="Email" class="w-full border p-2 rounded">
+                        <input type="text" placeholder="Téléphone" class="w-full border p-2 rounded">
 
                         <!-- Banque -->
-                        <select th:field="*{bank.id}" class="w-full border p-2 rounded">
+                        <select class="w-full border p-2 rounded">
                             <option value="" disabled selected>-- Sélectionnez une banque --</option>
-                            <option th:each="bank : ${banks}" th:value="${bank.id}" th:text="${bank.nom}"></option>
+                            <option>Banque A</option>
+                            <option>Banque B</option>
                         </select>
 
                         <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-500">Enregistrer</button>
