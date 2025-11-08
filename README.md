@@ -10,14 +10,13 @@ Cette application propose une interface **console** intuitive pour l’administr
 
 ## Contexte
 
-Le projet consiste en le développement d’une solution complète pour la gestion bancaire, répondant aux besoins des banques modernes en termes de sécurité, traçabilité et robustesse.
+Le projet consiste à développer une solution complète pour la gestion bancaire, répondant aux besoins des banques modernes en termes de sécurité, traçabilité et robustesse.
 
 ---
 
-## Objectifs 🎯
+## Objectifs 
 
 * Créer un système de gestion bancaire complet et sécurisé
-* Implémenter une architecture en couches solide (3-tiers)
 * Assurer la traçabilité de toutes les opérations effectuées
 * Respecter les design patterns et bonnes pratiques de développement
 * Garantir la qualité du code via des tests unitaires
@@ -30,7 +29,6 @@ Le projet consiste en le développement d’une solution complète pour la gesti
 | --------------- | --------------- |
 | Langage         | Java SE 17      |
 | Base de données | PostgreSQL      |
-| Tests           | JUnit           |
 | Build & gestion | Maven           |
 
 ---
@@ -47,19 +45,19 @@ L’application suit une architecture **3-tiers** :
 
 ## Fonctionnalités principales
 
-### Gestion des Banques 🏦
+### Gestion des Banques 
 
 * Enregistrement : Inscription des banques par l’administrateur avec envoi automatique d’email de bienvenue
 * Consultation : Visualisation des 15 banques ayant le plus de clients
 * Recherche : Filtrage des banques par pays ou ville
 
-### Gestion des Clients 👥
+### Gestion des Clients 
 
 * Enregistrement : Inscription des clients avec envoi automatique d’email de bienvenue
 * Recherche par banque : Liste des clients d’une banque spécifique
 * Recherche multicritères : Filtrage par nom, email, numéro client
 
-### Gestion des Comptes 💳
+### Gestion des Comptes 
 
 * Ouverture de compte : Création de nouveaux comptes clients
 * Clôture de compte : Fermeture des comptes existants
@@ -68,36 +66,16 @@ L’application suit une architecture **3-tiers** :
 
 ---
 
-## Installation et utilisation 🚀
+## Installation et utilisation 
 
 ### Prérequis
 
 * Java SE 17 installé
 * PostgreSQL configuré et opérationnel
-* Maven installé pour la gestion du projet
 
-### Lancement
 
-1. Cloner le projet
-2. Configurer la connexion à la base PostgreSQL dans le fichier de configuration
-3. Compiler et lancer avec Maven :
 
-   ```bash
-   mvn clean install
-   mvn exec:java -Dexec.mainClass="com.ada_bank.Main"
-   ```
-4. Utiliser l’interface console pour naviguer dans les différentes fonctionnalités
-
----
-
-## Tests et Qualité 🧪
-
-* Des tests unitaires sont développés avec **JUnit** pour garantir la fiabilité de la logique métier.
-* Le code respecte les bonnes pratiques et utilise les design patterns pour une maintenance facilitée.
-
----
-
-## Contribution 🤝
+## Contribution 
 
 Nous sommes ouverts aux contributions !
 Pour contribuer :
@@ -107,22 +85,3 @@ Pour contribuer :
 * Soumettre une merge request avec une description claire
 * Assurer que tous les tests passent avant de soumettre
 
----
-
-## Auteurs et Remerciements 🙏
-
-Merci à toute l’équipe de développement pour son engagement dans ce projet.
-
----
-
-## Licence
-
-Ce projet est sous licence **MIT** (à adapter selon votre choix).
-
----
-
-## Contact et Support
-
-Pour toute question, problème ou suggestion, merci d’ouvrir une issue sur GitLab ou de contacter l’administrateur du projet.
-
----
