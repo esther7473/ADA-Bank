@@ -12,10 +12,10 @@ class UserAccountEntityTest {
     private final Long id = 1L;
     private final String login = "auroreUser";
     private final String password = "securePass123";
-    private final String firstName = "Aurore";
-    private final String lastName = "Doe";
+    private final String nom = "Aurore";
+    private final String prenom = "Doe";
     private final String email = "aurore.doe@example.com";
-    private final String phoneNumber = "+22501020304";
+    private final String phone = "+22501020304";
     private final UserRole role = UserRole.ADMIN;
 
     private UserAccountEntity userAccountEntity;
@@ -27,45 +27,44 @@ class UserAccountEntityTest {
 
     @Test
     void assertThatFieldsAreEquals() {
-        // ✅ Setter / Getter test
         userAccountEntity.setId(id);
         userAccountEntity.setLogin(login);
         userAccountEntity.setPassword(password);
-        userAccountEntity.setFirstName(firstName);
-        userAccountEntity.setLastName(lastName);
+        userAccountEntity.setFirstName(nom);
+        userAccountEntity.setLastName(prenom);
         userAccountEntity.setEmail(email);
-        userAccountEntity.setPhoneNumber(phoneNumber);
+        userAccountEntity.setPhoneNumber(phone);
         userAccountEntity.setRole(role);
 
         assertThat(userAccountEntity).isNotNull()
                 .satisfies(u -> assertEquals(id, u.getId()))
                 .satisfies(u -> assertEquals(login, u.getLogin()))
                 .satisfies(u -> assertEquals(password, u.getPassword()))
-                .satisfies(u -> assertEquals(firstName, u.getFirstName()))
-                .satisfies(u -> assertEquals(lastName, u.getLastName()))
+                .satisfies(u -> assertEquals(nom, u.getFirstName()))
+                .satisfies(u -> assertEquals(prenom, u.getLastName()))
                 .satisfies(u -> assertEquals(email, u.getEmail()))
-                .satisfies(u -> assertEquals(phoneNumber, u.getPhoneNumber()))
+                .satisfies(u -> assertEquals(phone, u.getPhoneNumber()))
                 .satisfies(u -> assertEquals(role, u.getRole()));
 
-        // ✅ Vérifier une autre instance pour cohérence
+        // Vérifier une autre instance pour cohérence
         UserAccountEntity other = new UserAccountEntity();
         other.setId(id);
         other.setLogin(login);
         other.setPassword(password);
-        other.setFirstName(firstName);
-        other.setLastName(lastName);
+        other.setFirstName(nom);
+        other.setLastName(prenom);
         other.setEmail(email);
-        other.setPhoneNumber(phoneNumber);
+        other.setPhoneNumber(phone);
         other.setRole(role);
 
         assertThat(other).isNotNull()
                 .satisfies(u -> assertEquals(id, u.getId()))
                 .satisfies(u -> assertEquals(login, u.getLogin()))
                 .satisfies(u -> assertEquals(password, u.getPassword()))
-                .satisfies(u -> assertEquals(firstName, u.getFirstName()))
-                .satisfies(u -> assertEquals(lastName, u.getLastName()))
+                .satisfies(u -> assertEquals(nom, u.getFirstName()))
+                .satisfies(u -> assertEquals(prenom, u.getLastName()))
                 .satisfies(u -> assertEquals(email, u.getEmail()))
-                .satisfies(u -> assertEquals(phoneNumber, u.getPhoneNumber()))
+                .satisfies(u -> assertEquals(phone, u.getPhoneNumber()))
                 .satisfies(u -> assertEquals(role, u.getRole()));
     }
 }

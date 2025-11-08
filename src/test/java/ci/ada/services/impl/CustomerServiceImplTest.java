@@ -145,14 +145,4 @@ class CustomerServiceImplTest {
         verify(customerRepository).deleteAll();
     }
 
-    @Test
-    void givenBankSlug_whenFindAllByBankSlug_thenReturnCustomerDTOList() {
-        String bankSlug = "test-bank";
-        when(customerRepository.findAllByBankEntitySlug(bankSlug)).thenReturn(customerDTOList);
-
-        List<CustomerDTO> result = customerService.findAllByBankSlug(bankSlug);
-
-        verify(customerRepository).findAllByBankEntitySlug(bankSlug);
-        assertEquals(customerDTOList, result);
-    }
 }

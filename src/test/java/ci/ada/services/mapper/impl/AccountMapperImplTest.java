@@ -16,20 +16,18 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
 class AccountMapperImplTest {
 
-    private static final Long id = 1L;
-    private static final String numberAccount = "ACC-12345";
-    private static final BigDecimal balance = new BigDecimal("5000.00");
-    private static final AccountType accountType = AccountType.COURANT;
-    private static final AccountStatus accountStatus = AccountStatus.ACTIF;
-
-    private static final Long customerId = 10L;
-    private static final String customerUrlPicture = "pic.png";
+    private static final Long ID = 1L;
+    private static final String NUMBER_ACCOUNT = "ACC-12345";
+    private static final BigDecimal BALANCE = new BigDecimal("5000.00");
+    private static final AccountType ACCOUNT_TYPE = AccountType.COURANT;
+    private static final AccountStatus ACCOUNT_STATUS = AccountStatus.ACTIF;
+    private static final Long CUSTOMER_ID = 10L;
+    private static final String CUSTOMER_PIC_URL = "pic.png";
 
     private AccountDTO accountDTO;
     private AccountEntity accountEntity;
@@ -39,8 +37,8 @@ class AccountMapperImplTest {
     private static ModelMapper modelMapper;
     private static AccountMapperImpl accountMapper;
 
-    private static final List<AccountEntity> accountEntityList = new ArrayList<>();
-    private static final List<AccountDTO> accountDTOList = new ArrayList<>();
+    private static final List<AccountEntity> ACCOUNT_ENTITY_LIST = new ArrayList<>();
+    private static final List<AccountDTO> ACCOUNT_DTO_LIST = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
@@ -48,31 +46,31 @@ class AccountMapperImplTest {
         accountMapper = new AccountMapperImpl(modelMapper);
 
         customerDTO = new CustomerDTO();
-        customerDTO.setId(customerId);
-        customerDTO.setUrlPicture(customerUrlPicture);
+        customerDTO.setId(CUSTOMER_ID);
+        customerDTO.setUrlPicture(CUSTOMER_PIC_URL);
 
         customerEntity = new CustomerEntity();
-        customerEntity.setId(customerId);
-        customerEntity.setUrlPicture(customerUrlPicture);
+        customerEntity.setId(CUSTOMER_ID);
+        customerEntity.setUrlPicture(CUSTOMER_PIC_URL);
 
         accountDTO = new AccountDTO();
-        accountDTO.setId(id);
-        accountDTO.setNumberAccount(numberAccount);
-        accountDTO.setBalance(balance);
-        accountDTO.setAccountType(accountType);
-        accountDTO.setAccountStatus(accountStatus);
+        accountDTO.setId(ID);
+        accountDTO.setNumberAccount(NUMBER_ACCOUNT);
+        accountDTO.setBalance(BALANCE);
+        accountDTO.setAccountType(ACCOUNT_TYPE);
+        accountDTO.setAccountStatus(ACCOUNT_STATUS);
         accountDTO.setCustomer(customerDTO);
 
         accountEntity = new AccountEntity();
-        accountEntity.setId(id);
-        accountEntity.setNumberAccount(numberAccount);
-        accountEntity.setBalance(balance);
-        accountEntity.setAccountType(accountType);
-        accountEntity.setAccountStatus(accountStatus);
+        accountEntity.setId(ID);
+        accountEntity.setNumberAccount(NUMBER_ACCOUNT);
+        accountEntity.setBalance(BALANCE);
+        accountEntity.setAccountType(ACCOUNT_TYPE);
+        accountEntity.setAccountStatus(ACCOUNT_STATUS);
         accountEntity.setCustomer(customerEntity);
 
-        accountDTOList.add(accountDTO);
-        accountEntityList.add(accountEntity);
+        ACCOUNT_DTO_LIST.add(accountDTO);
+        ACCOUNT_ENTITY_LIST.add(accountEntity);
     }
 
     @Test
@@ -113,7 +111,7 @@ class AccountMapperImplTest {
     void givenAccountEntityList_whenToDTOs_thenReturnAccountDTOList() {
         when(modelMapper.map(any(CustomerEntity.class), eq(CustomerDTO.class))).thenReturn(customerDTO);
 
-        List<AccountDTO> result = accountMapper.toDTOs(accountEntityList);
+        List<AccountDTO> result = accountMapper.toDTOs(ACCOUNT_ENTITY_LIST);
 
         assertNotNull(result);
         assertFalse(result.isEmpty());

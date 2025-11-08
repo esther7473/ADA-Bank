@@ -44,7 +44,6 @@ class AccountDTOTest {
                 .satisfies(a -> assertEquals(accountStatus, a.getAccountStatus()))
                 .satisfies(a -> assertEquals(customer, a.getCustomer()));
 
-        // ✅ Via constructeur all-args
         AccountDTO other = new AccountDTO(id, numberAccount, balance, accountType, accountStatus, customer);
 
         assertThat(other).isNotNull()

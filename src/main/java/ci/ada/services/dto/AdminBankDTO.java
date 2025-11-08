@@ -12,5 +12,4 @@ public class AdminBankDTO {
 
     private String email;
 
-    //UserAccount ??
 }

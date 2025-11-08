@@ -49,15 +49,7 @@ class AuditingDTOTest {
 
         AuditingDTO other = new AuditingDTO(creationDate, modificationDate, deletionDate,createdBy,
                 modifiedBy, deletionBy, deletionReason, slug);
-       /*
-        other.setCreatedBy(createdBy);
-        other.setModifiedBy(modifiedBy);
-        other.setDeletionBy(deletionBy);
-        other.setDeletionReason(deletionReason);
-        other.setSlug(slug);createdBy
 
-
-        */
         assertThat(other).isNotNull()
                 .satisfies(a -> assertEquals(creationDate, a.getCreationDate()))
                 .satisfies(a -> assertEquals(modificationDate, a.getModificationDate()))

@@ -2,7 +2,6 @@ package ci.ada.models.entity;
 
 
 import ci.ada.models.Auditing;
-import ci.ada.services.dto.UserAccountDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -28,6 +28,15 @@
     </scm>
     <properties>
         <java.version>17</java.version>
+        <sonar.coverage.exclusions>**/*Controller.java,
+            ci.ada.services.dto.BankDataDto.java,
+            ci.ada.services.dto.CustomerDataDTO.java,
+            ci.ada.services.dto.UserDataDTO.java,
+            ci.ada.services.dto.UserToregisterDTO.java,
+            ci.ada.services.dto.AdminBankDTO.java,
+            ci.ada.services.dto.UserResponseDTO.java,
+        </sonar.coverage.exclusions>
+
     </properties>
     <dependencies>
         <dependency>
@@ -72,6 +81,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>3.2.4</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.slugify/slugify -->
+        <dependency>
+            <groupId>com.github.slugify</groupId>
+            <artifactId>slugify</artifactId>
+            <version>3.0.7</version>
+        </dependency>
 
 
     </dependencies>
@@ -101,6 +121,27 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <!-- Execute sonarqube test maven -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.11</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

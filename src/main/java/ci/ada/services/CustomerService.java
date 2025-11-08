@@ -1,6 +1,4 @@
 package ci.ada.services;
-
-import ci.ada.models.entity.CustomerEntity;
 import ci.ada.services.dto.CustomerDTO;
 import java.util.List;
 import org.springframework.stereotype.Service;

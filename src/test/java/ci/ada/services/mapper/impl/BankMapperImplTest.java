@@ -21,12 +21,12 @@ import static org.mockito.ArgumentMatchers.eq;
 
 class BankMapperImplTest {
 
-    private static final Long bankId = 1L;
-    private static final String bankName = "MyBank";
+    private static final Long BANK_ID = 1L;
+    private static final String BANK_NAME = "MyBank";
 
-    private static final Long adminId = 10L;
-    private static final Integer customers = 1;
-    private static final String adminLogin = "adminUser";
+    private static final Long ADMIN_ID = 10L;
+
+    private static final String ADMIN_LOGIN = "adminUser";
 
 
     private BankDTO bankDTO;
@@ -47,23 +47,23 @@ class BankMapperImplTest {
 
         // Mock admin objects
         adminDTO = new UserAccountDTO();
-        adminDTO.setId(adminId);
-        adminDTO.setLogin(adminLogin);
+        adminDTO.setId(ADMIN_ID);
+        adminDTO.setLogin(ADMIN_LOGIN);
 
         adminEntity = new UserAccountEntity();
-        adminEntity.setId(adminId);
-        adminEntity.setLogin(adminLogin);
+        adminEntity.setId(ADMIN_ID);
+        adminEntity.setLogin(ADMIN_LOGIN);
 
         // Mock bank objects
         bankDTO = new BankDTO();
-        bankDTO.setId(bankId);
-        bankDTO.setName(bankName);
+        bankDTO.setId(BANK_ID);
+        bankDTO.setName(BANK_NAME);
         bankDTO.setAdmin(adminDTO);
         bankDTO.setCustomers(1);
 
         bankEntity = new BankEntity();
-        bankEntity.setId(bankId);
-        bankEntity.setName(bankName);
+        bankEntity.setId(BANK_ID);
+        bankEntity.setName(BANK_NAME);
         bankEntity.setAdmin(adminEntity);
         bankEntity.setCustomers(1);
 

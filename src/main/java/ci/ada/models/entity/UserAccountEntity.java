@@ -3,13 +3,10 @@ package ci.ada.models.entity;
 import ci.ada.models.Auditing;
 import ci.ada.models.enums.UserRole;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 
 @Entity
-@Getter
 
 public class UserAccountEntity extends Auditing implements Serializable {
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserFacade {
 
-    BankDTO registerNewBank(BankToRegisterDto bankToRegisterDto, UserToregisterDTO admin);
+    BankDTO registerNewBank(BankDTO bankDTO);
     CustomerDTO registerNewCustomer(CustomerDTO customerDTO);
 
 }

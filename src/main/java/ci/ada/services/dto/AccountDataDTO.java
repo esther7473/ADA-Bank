@@ -16,5 +16,4 @@ public class AccountDataDTO {
 
     private AccountStatus accountStatus;
 
-    //private CustomerDTO customer;
 }

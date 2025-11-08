@@ -5,6 +5,7 @@ import ci.ada.models.entity.AccountEntity;
 import ci.ada.services.AccountService;
 import ci.ada.services.dto.AccountDTO;
 import ci.ada.services.mapper.AccountMapper;
+import ci.ada.utils.AccountNumberGenerator;
 import ci.ada.utils.SlugifyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDTO save(AccountDTO accountDTO) {
+        String uniqueNumber = AccountNumberGenerator.generateRandomNumber();
+        accountDTO.setNumberAccount(uniqueNumber);
+
         AccountEntity accountEntity = accountMapper.toEntity(accountDTO);
         accountEntity = accountRepository.save(accountEntity);
         return accountMapper.toDTO(accountEntity);
@@ -33,26 +37,13 @@ public class AccountServiceImpl implements AccountService {
         return save(accountDTO);
     }
 
-    /*
-    A REVOIR
-     */
+
     @Override
     public AccountDTO update(AccountDTO accountDTO) {
-        if (Objects.isNull(accountDTO.getSlug())) {
-            throw new IllegalArgumentException("slug is required");
-        }
-        AccountDTO dto = getBySlug(accountDTO.getSlug());
-        if (Objects.nonNull(dto)) {
-            return save(accountDTO);
-        }else  {
-            throw new IllegalArgumentException("slug is required");
-        }
-
+        return save(accountDTO);
     }
 
-    /* A REVOIR
 
-     */
     @Override
     public AccountDTO partialUpdate(AccountDTO accountDTO) {
         if (Objects.isNull(accountDTO.getId())) {

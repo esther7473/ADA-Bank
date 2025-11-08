@@ -22,6 +22,21 @@ public class AccountEntity extends Auditing implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String numberAccount;
+
+    private BigDecimal balance;
+
+    private AccountType accountType;
+
+    private AccountStatus accountStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "customerId")
+    private CustomerEntity customer;
+
+
+
+
     public Long getId() {
         return id;
     }
@@ -70,17 +85,7 @@ public class AccountEntity extends Auditing implements Serializable {
         this.customer = customer;
     }
 
-    private String numberAccount;
 
-    private BigDecimal balance;
-
-    private AccountType accountType;
-
-    private AccountStatus accountStatus;
-
-    @ManyToOne
-    @JoinColumn(name = "customerId")
-    private CustomerEntity customer;
 
 
 

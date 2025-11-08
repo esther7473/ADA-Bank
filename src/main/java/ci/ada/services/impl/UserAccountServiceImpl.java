@@ -5,11 +5,9 @@ import ci.ada.models.entity.UserAccountEntity;
 import ci.ada.models.enums.UserRole;
 import ci.ada.services.UserAccountService;
 import ci.ada.services.dto.UserAccountDTO;
-import ci.ada.services.dto.UserResponseDTO;
 import ci.ada.services.mapper.UserAccountMapper;
 import ci.ada.utils.SlugifyUtils;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,23 +20,34 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
     private final UserAccountMapper userAccountMapper;
-    private final ModelMapper modelMapper;
 
 
     @Override
-    public UserResponseDTO saveAdminBank(UserAccountDTO userAccountDTO) {
+    public UserAccountDTO saveAdminBank(UserAccountDTO userAccountDTO) {
         userAccountDTO.setRole(UserRole.ADMIN_BANK);
         userAccountDTO = save(userAccountDTO);
-        //return userAccountMapper.dtoToData(userAccountDTO);
-        return modelMapper.map(userAccountDTO,UserResponseDTO.class);
+        return userAccountDTO;
 
     }
 
     @Override
-    public UserResponseDTO saveAdminBankWithSlug(UserAccountDTO userAccountDTO) {
-        final String finalSlug = SlugifyUtils.generate("bankAdmin");
-        userAccountDTO.setSlug(finalSlug);
-        return saveAdminBank(userAccountDTO);
+    public UserAccountDTO saveAdminBankWithSlug(UserAccountDTO userAccountDTO) {
+        if (userAccountDTO == null) {
+            throw new IllegalArgumentException("UserAccountDTO cannot be null");
+        }
+
+        try {
+            final String finalSlug = SlugifyUtils.generate("bankAdmin");
+            userAccountDTO.setSlug(finalSlug);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Failed to generate slug for bank admin", e);
+        }
+
+        try {
+            return saveAdminBank(userAccountDTO);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Failed to save admin bank user", e);
+        }
     }
 
     @Override
@@ -55,6 +64,9 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public UserAccountDTO save(UserAccountDTO userAccountDTO) {
+        if (userAccountDTO == null) {
+            throw new IllegalArgumentException("UserAccountDTO cannot be null");
+        }
         System.out.println(" role : "+userAccountDTO.getRole());
         if (userAccountDTO.getRole() == null) {
             throw new IllegalArgumentException("Role must not be null");
@@ -108,6 +120,9 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public UserAccountDTO getById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id cannot be null");
+        }
 
         return userAccountRepository.findById(id)
                 .map(userAccountMapper::toDTO)

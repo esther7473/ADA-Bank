@@ -2,10 +2,8 @@ package ci.ada.services.impl;
 
 import ci.ada.Repository.CustomerRepository;
 import ci.ada.models.entity.CustomerEntity;
-import ci.ada.services.CrudService;
 import ci.ada.services.CustomerService;
 import ci.ada.services.dto.CustomerDTO;
-import ci.ada.services.dto.UserAccountDTO;
 import ci.ada.services.mapper.CustomerMapper;
 import ci.ada.utils.SlugifyUtils;
 import lombok.RequiredArgsConstructor;

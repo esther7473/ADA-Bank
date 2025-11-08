@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- ===== SIDEBAR FRAGMENT ===== -->
+<th:block th:fragment="sidebar">
+    <aside class="w-64 bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 text-white flex flex-col">
+        <div class="p-6 font-bold text-xl">MyBank Admin</div>
+        <nav class="flex-1 px-4 py-6 space-y-3">
+            <a href="#" class="block px-3 py-2 rounded-lg bg-white/20 font-medium">📊 Tableau de bord</a>
+            <a href="#customers" class="block px-3 py-2 rounded-lg hover:bg-white/10">👥 Clients</a>
+            <a href="#accounts" class="block px-3 py-2 rounded-lg hover:bg-white/10">💳 Comptes</a>
+            <a href="#transactions" class="block px-3 py-2 rounded-lg hover:bg-white/10">💸 Transactions</a>
+            <a href="#notifications" class="block px-3 py-2 rounded-lg hover:bg-white/10">🔔 Validation Virements</a>
+        </nav>
+        <div class="p-4 text-sm text-white/80 border-t border-white/30">© 2025 e-Banking Admin</div>
+    </aside>
+</th:block>
+
+</body>
+</html>

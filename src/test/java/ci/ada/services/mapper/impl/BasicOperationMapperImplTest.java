@@ -20,8 +20,8 @@ class BasicOperationMapperImplTest {
 
     private static final Long OPERATION_ID = 1L;
     private static final String REFERENCE = "OP-123";
-    private static final BigDecimal amount = new BigDecimal("250.00");
-    private static final OperationType operationType = OperationType.DEPOSIT;
+    private static final BigDecimal AMOUNT = new BigDecimal("250.00");
+    private static final OperationType OP_TYPE = OperationType.DEPOSIT;
 
     private BasicOperationDTO basicOperationDTO;
     private BasicOperationEntity basicOperationEntity;
@@ -48,17 +48,17 @@ class BasicOperationMapperImplTest {
         // Mock BasicOperation DTO
         basicOperationDTO = new BasicOperationDTO();
         basicOperationDTO.setId(OPERATION_ID);
-        basicOperationDTO.setOperationType(operationType);
+        basicOperationDTO.setOperationType(OP_TYPE);
         basicOperationDTO.setReference(REFERENCE);
-        basicOperationDTO.setAmount(amount);
+        basicOperationDTO.setAmount(AMOUNT);
         basicOperationDTO.setAccount(accountDTO);
 
         // Mock BasicOperation Entity
         basicOperationEntity = new BasicOperationEntity();
         basicOperationEntity.setId(OPERATION_ID);
-        basicOperationEntity.setOperationType(operationType);
+        basicOperationEntity.setOperationType(OP_TYPE);
         basicOperationEntity.setReference(REFERENCE);
-        basicOperationEntity.setAmount(amount);
+        basicOperationEntity.setAmount(AMOUNT);
         basicOperationEntity.setAccount(accountEntity);
     }
 

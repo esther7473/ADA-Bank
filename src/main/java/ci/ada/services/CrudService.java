@@ -6,9 +6,7 @@ import java.util.List;
 
 @Service
 public interface CrudService<D> {
-    /* D doit etre un dto
 
-     */
 
     D save(D d);
 

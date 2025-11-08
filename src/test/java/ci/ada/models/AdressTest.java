@@ -11,7 +11,7 @@ class AdressTest {
     private final String pays = "Côte d'Ivoire";
     private final String ville = "Abidjan";
     private final String longitude = "-4.008256";
-    private final String lattitude = "5.359952";
+    private final String latitude = "5.359952";
 
     private Adress adress;
 
@@ -25,12 +25,12 @@ class AdressTest {
         adress.setPays(pays);
         adress.setVille(ville);
         adress.setLongitude(longitude);
-        adress.setLattitude(lattitude);
+        adress.setLattitude(latitude);
 
         assertThat(adress).isNotNull()
                 .satisfies(a -> assertEquals(pays, a.getPays()))
                 .satisfies(a -> assertEquals(ville, a.getVille()))
                 .satisfies(a -> assertEquals(longitude, a.getLongitude()))
-                .satisfies(a -> assertEquals(lattitude, a.getLattitude()));
+                .satisfies(a -> assertEquals(latitude, a.getLattitude()));
     }
 }

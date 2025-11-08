@@ -17,8 +17,8 @@ import static org.mockito.Mockito.*;
 class TransferMapperImplTest {
 
     private static final Long ID = 1L;
-    private static final String reference = "REF-123";
-    private static final BigDecimal amount = new BigDecimal("2500.00");
+    private static final String REF = "REF-123";
+    private static final BigDecimal AMOUNT = new BigDecimal("2500.00");
 
     private TransferDTO transferDTO;
     private TransferEntity transferEntity;
@@ -58,16 +58,16 @@ class TransferMapperImplTest {
         transferDTO.setId(ID);
         transferDTO.setSource(sourceDTO);
         transferDTO.setDestination(destinationDTO);
-        transferDTO.setReference(reference);
-        transferDTO.setAmount(amount);
+        transferDTO.setReference(REF);
+        transferDTO.setAmount(AMOUNT);
 
         // Entity
         transferEntity = new TransferEntity();
         transferEntity.setId(ID);
         transferEntity.setSource(sourceEntity);
         transferEntity.setDestination(destinationEntity);
-        transferEntity.setReference(reference);
-        transferEntity.setAmount(amount);
+        transferEntity.setReference(REF);
+        transferEntity.setAmount(AMOUNT);
     }
 
     @Test

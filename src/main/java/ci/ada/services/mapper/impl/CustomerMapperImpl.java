@@ -6,7 +6,6 @@ import ci.ada.models.entity.UserAccountEntity;
 import ci.ada.services.dto.BankDTO;
 import ci.ada.services.dto.CustomerDTO;
 import ci.ada.services.dto.UserAccountDTO;
-import ci.ada.services.mapper.AccountMapper;
 import ci.ada.services.mapper.CustomerMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

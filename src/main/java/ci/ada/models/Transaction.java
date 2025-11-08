@@ -1,7 +1,6 @@
 package ci.ada.models;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.math.BigDecimal;
 

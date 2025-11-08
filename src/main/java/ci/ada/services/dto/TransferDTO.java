@@ -1,5 +1,4 @@
 package ci.ada.services.dto;
-;
 import lombok.*;
 
 

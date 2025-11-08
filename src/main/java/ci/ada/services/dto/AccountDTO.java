@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 
 
 @NoArgsConstructor
-//@Builder
 @AllArgsConstructor
 public class AccountDTO extends AuditingDTO implements Serializable {
     public Long getId() {

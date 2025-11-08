@@ -1,7 +1,6 @@
 package ci.ada.services.mapper.impl;
 
 import ci.ada.models.entity.BankEntity;
-import ci.ada.models.entity.CustomerEntity;
 import ci.ada.models.entity.UserAccountEntity;
 import ci.ada.services.dto.BankDTO;
 import ci.ada.services.dto.UserAccountDTO;

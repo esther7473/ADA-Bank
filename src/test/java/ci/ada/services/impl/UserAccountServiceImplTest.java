@@ -7,7 +7,6 @@ import ci.ada.services.dto.UserAccountDTO;
 import ci.ada.services.mapper.UserAccountMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,6 @@ class UserAccountServiceImplTest {
 
     private UserAccountRepository userAccountRepository;
     private UserAccountMapper userAccountMapper;
-    private ModelMapper modelMapper;
 
     private UserAccountServiceImpl userAccountService;
 
@@ -41,8 +39,7 @@ class UserAccountServiceImplTest {
     void setUp() {
         userAccountRepository = mock(UserAccountRepository.class);
         userAccountMapper = mock(UserAccountMapper.class);
-        modelMapper = mock(ModelMapper.class);
-        userAccountService = new UserAccountServiceImpl(userAccountRepository, userAccountMapper, modelMapper);
+        userAccountService = new UserAccountServiceImpl(userAccountRepository, userAccountMapper);
 
         userAccountDTO = new UserAccountDTO();
         userAccountDTO.setEmail(email);

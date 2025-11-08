@@ -3,12 +3,10 @@ package ci.ada.services.impl;
 import ci.ada.Repository.BankRepository;
 import ci.ada.models.entity.BankEntity;
 import ci.ada.services.BankService;
-import ci.ada.services.dto.AccountDTO;
 import ci.ada.services.dto.BankDTO;
 import ci.ada.services.mapper.BankMapper;
 import ci.ada.utils.SlugifyUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

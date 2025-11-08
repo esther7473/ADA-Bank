@@ -2,81 +2,174 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Banque - E-Banking</title>
+    <title>Dashboard Admin - E-Banking</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --color-primary: #2563eb;
+        }
+    </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-900">
 
 <div class="flex min-h-screen">
 
-    <!-- ===== SIDEBAR ===== -->
-    <aside class="w-64 bg-gradient-to-b from-blue-600 via-indigo-600 to-purple-500 text-white flex flex-col">
-        <div class="p-6 font-bold text-xl">Bank Admin</div>
-        <nav class="flex-1 px-4 py-6 space-y-3">
-            <a href="#" class="block px-3 py-2 rounded-lg bg-white/20 font-medium">🏠 Accueil</a>
-            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-white/10">👥 Clients</a>
-            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-white/10">💳 Comptes</a>
-            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-white/10">⚙️ Paramètres</a>
-        </nav>
-        <div class="p-4 text-sm text-white/80 border-t border-white/30">© 2025 e-Banking</div>
-    </aside>
+    <!-- ===== INCLUSION DE LA SIDEBAR ===== -->
+    <!-- Remplacez cette ligne par l'inclusion réelle de votre fragment -->
+    <div th:insert="~{fragment :: sidebar}"></div>
 
     <!-- ===== MAIN ===== -->
     <div class="flex-1 flex flex-col">
 
         <!-- ===== HEADER ===== -->
         <header class="bg-white shadow flex items-center justify-between px-6 py-3">
-            <h1 class="text-xl font-bold">Tableau de bord - MyBank</h1>
+            <h1 class="text-xl font-bold">Espace Administrateur - <span id="bankName">Ma Banque</span> 🏦</h1>
             <div class="flex items-center gap-4">
-                <!-- Profil Admin -->
+                <div class="relative">
+                    <button id="adminNotifBtn" class="relative px-3 py-2 bg-red-500 text-white rounded-lg">
+                        Virements à valider
+                        <span id="pendingTransfersCount" class="absolute -top-2 -right-2 bg-white text-red-500 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border border-red-200">0</span>
+                    </button>
+                </div>
                 <div class="flex items-center gap-2">
-                    <img src="https://i.pravatar.cc/40" class="w-8 h-8 rounded-full" alt="admin avatar">
-                    <span class="font-medium">Admin Bank</span>
+                    <img src="https://i.pravatar.cc/40?img=5" class="w-8 h-8 rounded-full" alt="avatar">
+                    <span class="font-medium" id="adminName">M. Admin</span>
                 </div>
             </div>
         </header>
 
+        <!-- ===== KPI CARDS ===== -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-6 bg-gray-100">
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <div class="text-3xl font-bold text-emerald-600" id="totalCustomers">0</div>
+                <div class="text-gray-500 text-sm mt-1">Clients Totaux</div>
+            </div>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <div class="text-3xl font-bold text-blue-600" id="totalAccounts">0</div>
+                <div class="text-gray-500 text-sm mt-1">Comptes</div>
+            </div>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <div class="text-3xl font-bold text-amber-600" id="pendingTransactions">0</div>
+                <div class="text-gray-500 text-sm mt-1">Virements en Attente</div>
+            </div>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <div class="text-3xl font-bold text-red-600">€ <span id="totalBalance">0</span></div>
+                <div class="text-gray-500 text-sm mt-1">Solde Total Géré</div>
+            </div>
+        </div>
+
         <!-- ===== CONTENT ===== -->
         <main class="flex-1 p-6 space-y-6">
 
-            <!-- Résumé banque -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-2xl shadow p-5">
-                    <h3 class="text-gray-500 text-sm">Nom de la banque</h3>
-                    <p class="text-2xl font-bold text-blue-600">MyBank</p>
+            <!-- SECTION 1: Liste des Clients -->
+            <section id="customers" class="bg-white rounded-2xl shadow p-6">
+                <h2 class="text-lg font-bold mb-4">👥 Liste des Clients</h2>
+                <div class="mb-4">
+                    <input type="text" placeholder="Rechercher un client..." class="border rounded-lg px-3 py-2 text-sm w-64" id="customerSearch">
                 </div>
-                <div class="bg-white rounded-2xl shadow p-5">
-                    <h3 class="text-gray-500 text-sm">Nombre de clients</h3>
-                    <p class="text-2xl font-bold text-blue-600">256</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="border-b bg-gray-50">
+                        <tr class="text-left">
+                            <th class="py-3 px-4">Client</th>
+                            <th class="py-3 px-4">Email</th>
+                            <th class="py-3 px-4">Banque</th>
+                            <th class="py-3 px-4">Nb. Comptes</th>
+                            <th class="py-3 px-4 text-center">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="customersList">
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="py-3 px-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://i.pravatar.cc/40?img=1" class="w-8 h-8 rounded-full" alt="avatar">
+                                    <div>
+                                        <div class="font-medium">Jean Dupont</div>
+                                        <div class="text-xs text-gray-500">ID: 123</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4">j.dupont@email.com</td>
+                            <td class="py-3 px-4">Ma Banque</td>
+                            <td class="py-3 px-4">2</td>
+                            <td class="py-3 px-4 text-center">
+                                <button class="text-emerald-600 hover:text-emerald-800 text-sm font-medium">Voir Comptes</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="bg-white rounded-2xl shadow p-5">
-                    <h3 class="text-gray-500 text-sm">Nombre de comptes</h3>
-                    <p class="text-2xl font-bold text-blue-600">420</p>
-                </div>
-            </div>
+            </section>
 
-            <!-- Infos admin -->
-            <div class="bg-white rounded-2xl shadow p-6">
-                <h2 class="text-lg font-bold mb-4">Administrateur</h2>
-                <div class="flex items-center gap-4">
-                    <img src="https://i.pravatar.cc/60" class="w-14 h-14 rounded-full" alt="admin">
-                    <div>
-                        <p class="font-semibold">Jean Admin</p>
-                        <p class="text-sm text-gray-500">Email : admin@mybank.com</p>
-                        <p class="text-sm text-gray-500">Téléphone : +33 6 12 34 56 78</p>
-                    </div>
+            <!-- SECTION 2: Comptes d'un Client -->
+            <section id="customerAccountsSection" class="bg-white rounded-2xl shadow p-6">
+                <h2 class="text-lg font-bold mb-4">💳 Comptes de <span id="selectedCustomerName">[Nom Client]</span></h2>
+                <button class="mb-4 text-sm text-gray-500 hover:text-gray-700">← Retour à la liste</button>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="border-b bg-gray-50">
+                        <tr class="text-left">
+                            <th class="py-3 px-4">Numéro de Compte</th>
+                            <th class="py-3 px-4">Type</th>
+                            <th class="py-3 px-4">Solde</th>
+                            <th class="py-3 px-4">Date Création</th>
+                            <th class="py-3 px-4 text-center">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="customerAccountsList">
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="py-3 px-4 font-mono">FR76 1234 5678 9012</td>
+                            <td class="py-3 px-4">Courant</td>
+                            <td class="py-3 px-4">2 340,00 €</td>
+                            <td class="py-3 px-4">01/01/2024</td>
+                            <td class="py-3 px-4 text-center">
+                                <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Voir Transactions</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+            </section>
 
-            <!-- Dernières activités -->
-            <div class="bg-white rounded-2xl shadow p-6">
-                <h2 class="text-lg font-bold mb-4">Dernières activités</h2>
-                <ul class="space-y-2 text-sm">
-                    <li>👤 Nouveau client inscrit : <span class="font-semibold">Alice Dupont</span> (hier)</li>
-                    <li>💳 Nouveau compte créé : Compte Épargne (18/08)</li>
-                    <li>👥 Total clients atteint <span class="font-semibold">250</span> (15/08)</li>
-                </ul>
-            </div>
+            <!-- SECTION 3: Transactions & Validation -->
+            <section id="transactions" class="bg-white rounded-2xl shadow p-6">
+                <h2 class="text-lg font-bold mb-4">💸 Transactions Récentes Tous Clients</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="border-b bg-gray-50">
+                        <tr class="text-left">
+                            <th class="py-3 px-4">Date/Heure</th>
+                            <th class="py-3 px-4">Client</th>
+                            <th class="py-3 px-4">Type</th>
+                            <th class="py-3 px-4">Montant</th>
+                            <th class="py-3 px-4">Statut</th>
+                            <th class="py-3 px-4 text-center">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="py-3 px-4">18/08/2025 14:30</td>
+                            <td class="py-3 px-4">Jean Dupont</td>
+                            <td class="py-3 px-4">Virement Sortant</td>
+                            <td class="py-3 px-4 text-red-600">-200 €</td>
+                            <td class="py-3 px-4"><span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">En Attente</span></td>
+                            <td class="py-3 px-4 text-center">
+                                <button class="text-green-600 hover:text-green-800 text-sm font-medium mr-2">Valider</button>
+                                <button class="text-red-600 hover:text-red-800 text-sm font-medium">Rejeter</button>
+                            </td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="py-3 px-4">18/08/2025 09:15</td>
+                            <td class="py-3 px-4">Marie Lambert</td>
+                            <td class="py-3 px-4">Dépôt</td>
+                            <td class="py-3 px-4 text-green-600">+500 €</td>
+                            <td class="py-3 px-4"><span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Validé</span></td>
+                            <td class="py-3 px-4 text-center">-</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
         </main>
     </div>

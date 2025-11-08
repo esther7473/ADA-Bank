@@ -14,4 +14,6 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
     Optional<AccountEntity> findBySlug(String slug);
 
     List<AccountDTO> findAllByCustomerSlug(String customerSlug);
+
+    boolean existsByNumberAccount(String numberAccount);
 }

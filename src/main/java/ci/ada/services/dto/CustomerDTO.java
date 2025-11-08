@@ -12,6 +12,14 @@ public class CustomerDTO extends  AuditingDTO implements Serializable {
 
     private Long id;
 
+    private String urlPicture;
+
+    private BankDTO bank;
+
+    private List<AccountDTO> accounts;
+
+    private UserAccountDTO userAccountDTO;
+
     public Long getId() {
         return id;
     }
@@ -52,12 +60,5 @@ public class CustomerDTO extends  AuditingDTO implements Serializable {
         this.userAccountDTO = userAccountDTO;
     }
 
-    private String urlPicture;
-
-    private BankDTO bank;
-
-    private List<AccountDTO> accounts;
-
-    private UserAccountDTO userAccountDTO;
 
 }

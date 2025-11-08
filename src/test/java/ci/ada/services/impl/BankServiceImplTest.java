@@ -29,7 +29,7 @@ class BankServiceImplTest {
     private static BankEntity bankEntityToSave;
 
     private static final List<BankDTO> bankDTOList = new ArrayList<>();
-    private static final List<BankEntity> bankEntitiesList = new ArrayList<>();
+    private static final List<BankEntity> bankEntityList = new ArrayList<>();
 
     private BankRepository bankRepository;
     private BankMapper bankMapper;
@@ -64,8 +64,8 @@ class BankServiceImplTest {
         bankEntityToSave.setId(id);
         bankEntityToSave.setName(updatedName);
 
-        bankEntitiesList.add(bankEntity);
-        bankEntitiesList.add(bankEntityResponse);
+        bankEntityList.add(bankEntity);
+        bankEntityList.add(bankEntityResponse);
 
         bankDTOList.add(bankDTO);
         bankDTOList.add(bankDTOResponse);
@@ -126,11 +126,11 @@ class BankServiceImplTest {
     }
 
     @Test
-    void whenGetAll_return_BankDTOList() {
-        when(bankRepository.findAll()).thenReturn(bankEntitiesList);
+    void whenGetAll_returnBankDTOList() {
+        when(bankRepository.findAll()).thenReturn(bankEntityList);
 
-        for (int i = 0; i < bankEntitiesList.size(); i++) {
-            when(bankMapper.toDTO(bankEntitiesList.get(i))).thenReturn(bankDTOList.get(i));
+        for (int i = 0; i < bankEntityList.size(); i++) {
+            when(bankMapper.toDTO(bankEntityList.get(i))).thenReturn(bankDTOList.get(i));
         }
 
         List<BankDTO> result = bankService.getAll();

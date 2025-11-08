@@ -4,7 +4,6 @@ import ci.ada.services.UserFacade;
 import ci.ada.services.dto.CustomerDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    private UserFacade userFacade;
+    private final UserFacade userFacade;
 
     @GetMapping()
-    public String customerDashboard(Model model) {
-        //model.addAttribute("client",client);
+    public String customerDashboard() {
+
         return "dashboard/client";
     }
 
