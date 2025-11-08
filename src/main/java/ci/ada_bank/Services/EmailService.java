@@ -10,10 +10,11 @@ public class EmailService {
 
     public static void sendEmail(String toEmail, String subject, String body) {
 
-        String host = "smtp.gmail.com";
-        String port = "587";
-        String username = "sunservices94@gmail.com";
-        String password = "qafa tpbo zird ukwl".replace(" ", "");
+        String host = System.getenv("SMTP_HOST");
+        String port = System.getenv("SMTP_PORT");
+        String username = System.getenv("MAIL_USER");
+        String password = System.getenv("MAIL_PASS");
+
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
