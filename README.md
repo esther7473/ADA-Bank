@@ -5,7 +5,6 @@
 ##  Description
 
 **ADA BANK** est une application web de gestion bancaire développée avec **Spring Boot**, conçue pour permettre aux institutions bancaires de gérer efficacement leurs **clients**, **comptes** et **transactions**.
-Cette version modernisée offre une architecture robuste, une configuration simplifiée et des fonctionnalités avancées comme l’envoi d’e-mails automatisés.
 
 ---
 
@@ -20,8 +19,6 @@ Le projet vise à fournir une solution complète pour la gestion bancaire, en co
 * Créer un système de gestion bancaire complet et sécurisé
 * Assurer la traçabilité des opérations (clients, comptes, transactions)
 * Respecter les **design patterns** et bonnes pratiques Spring
-* Utiliser des tests unitaires pour garantir la qualité du code
-* Externaliser toutes les configurations sensibles via des **variables d’environnement**
 
 ---
 
@@ -36,13 +33,13 @@ Le projet vise à fournir une solution complète pour la gestion bancaire, en co
 | Sécurité            | Spring Security                 |
 | Envoi d’emails      | Spring Boot Starter Mail        |
 | IDE recommandé      | IntelliJ IDEA                   |
-| Tests               | JUnit, Mockito                  |
+
 
 ---
 
 ##  Architecture
 
-L’application suit une architecture en couche.
+L’application suit une architecture en couches.
 
 
 ##  Fonctionnalités principales
@@ -69,4 +66,4 @@ L’application suit une architecture en couche.
 Note : les variables d’environnement sont configurées dans `.env`,( **non versionné**) 
 
 
-
+**Note** : Le projet est encore en cours de développement et certaines fonctionnalités restent à implémenter.
